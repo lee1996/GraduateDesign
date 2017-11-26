@@ -13,6 +13,7 @@
         android:orientation="vertical"
         >
         <EditText
+            android:id="@+id/loginuser"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -24,6 +25,7 @@
             android:background="@drawable/edit_bg"
             />
         <EditText
+            android:id="@+id/loginpwd"
             android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"

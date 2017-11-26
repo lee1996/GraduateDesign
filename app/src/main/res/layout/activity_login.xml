@@ -55,23 +55,13 @@
         android:layout_height="350dp"
         android:orientation="horizontal"
         >
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/loginlayout"
-            android:name="LoginAndRegister.LoginFragment"
-            />
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <fragment
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/registerlayout"
-                android:layout_weight="1"
-                android:name="LoginAndRegister.RegisterFragment"
-                />
-        </FrameLayout>
+       <android.support.v4.view.ViewPager
+           android:id="@+id/viewpager"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center">
+
+       </android.support.v4.view.ViewPager>
 
     </LinearLayout>
 </LinearLayout>
