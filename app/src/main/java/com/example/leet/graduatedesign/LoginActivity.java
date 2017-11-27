@@ -47,7 +47,7 @@ public class LoginActivity extends FragmentActivity {
         final List<Fragment> list=new ArrayList<Fragment>();
         list.add(loginFragment);
         list.add(registerFragment);
-        viewPager=findViewById(R.id.viewpager);
+        viewPager=(ViewPager) findViewById(R.id.viewpager);
         FragmentPagerAdapter fragmentPagerAdapter=new FragmentPagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
@@ -61,21 +61,23 @@ public class LoginActivity extends FragmentActivity {
 //                }
                 return list.get(position);
             }
-
             @Override
             public int getCount() {
                 return list.size();
             }
         };
-//        if(viewPager.getCurrentItem()==0){
-//            logintext.setTextColor(R.color.cpb_blue);
-//            registtext.setTextColor(R.color.cpb_grey);
-//        }
-//        if(viewPager.getCurrentItem()==1){
-//            logintext.setTextColor(R.color.cpb_grey);
-//            registtext.setTextColor(R.color.cpb_blue);
-//        }
         viewPager.setAdapter(fragmentPagerAdapter);
-//
+        logintext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(0);
+            }
+        });
+        registtext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+            }
+        });
     }
 }

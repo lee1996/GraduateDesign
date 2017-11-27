@@ -3,7 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <LinearLayout
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"/>
     <LinearLayout
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -33,9 +42,11 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="密码"
+            android:maxLength="13"
             android:textColorHint="#999"
             android:textSize="18sp"
-            android:background="@drawable/edit_bg"/>
+            android:background="@drawable/edit_bg"
+            android:password="true"/>
         <com.dd.CircularProgressButton
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"

@@ -15,6 +15,8 @@ import com.dd.CircularProgressButton;
 import com.example.leet.graduatedesign.MainActivity;
 import com.example.leet.graduatedesign.R;
 
+import MyThread.LoginThread;
+
 /**
  * Created by leet on 17-11-25.
  */
@@ -34,16 +36,20 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final EditText loginuser=(EditText)getView().findViewById(R.id.loginuser);
         final EditText loginpwd=(EditText)getView().findViewById(R.id.loginpwd);
-        CircularProgressButton login=(CircularProgressButton)getView().findViewById(R.id.login);
+        final CircularProgressButton login=(CircularProgressButton)getView().findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user=loginuser.getText().toString();
                 String pwd=loginpwd.getText().toString();
                 Log.i("登录信息","用户名为"+user+"   密码为"+pwd);
-                Intent intent=new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+//                Intent intent=new Intent(getActivity(), MainActivity.class);
+//                startActivity(intent);
+//                getActivity().finish();
+                login.setIndeterminateProgressMode(true);
+                login.setProgress(50);
+                new LoginThread().start();
+                login.setProgress(CircularProgressButton.SUCCESS_STATE_PROGRESS);
             }
         });
     }

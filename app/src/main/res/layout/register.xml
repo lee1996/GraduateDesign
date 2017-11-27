@@ -3,7 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <LinearLayout
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"/>
     <LinearLayout
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -13,6 +22,7 @@
         android:orientation="vertical"
         >
         <EditText
+            android:id="@+id/registeruser"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -24,32 +34,38 @@
             android:background="@drawable/edit_bg"
             />
         <EditText
+            android:id="@+id/registerpwd"
             android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="密码"
+            android:hint="密码(6~13位)"
             android:textColorHint="#999"
             android:textSize="18sp"
-            android:background="@drawable/edit_bg"/>
+            android:background="@drawable/edit_bg"
+            android:maxLength="13"
+            android:password="true"/>
         <EditText
+            android:id="@+id/registerpwdcon"
             android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="确认密码"
+            android:hint="确认密码(6~13位)"
             android:textColorHint="#999"
+            android:maxLength="13"
             android:textSize="18sp"
-            android:background="@drawable/edit_bg"/>
+            android:background="@drawable/edit_bg"
+            android:password="true"/>
         <com.dd.CircularProgressButton
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/login"
+            android:id="@+id/register"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -58,6 +74,7 @@
             app:cpb_textComplete="Complete"
             app:cpb_textError="Error"
             app:cpb_textIdle="注 册"
-            app:cpb_cornerRadius="3dp"/>
+            app:cpb_cornerRadius="3dp"
+           />
     </LinearLayout>
 </LinearLayout>

@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="登 录"
-                android:textStyle="bold"
                 android:textColor="@color/cpb_blue"
+                android:textStyle="bold"
                 android:textSize="18sp"/>
             <TextView
                 android:id="@+id/registext"
@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textStyle="bold"
+                android:textColor="@color/cpb_red"
                 android:text="注 册"
                 android:textSize="18sp"/>
         </LinearLayout>
