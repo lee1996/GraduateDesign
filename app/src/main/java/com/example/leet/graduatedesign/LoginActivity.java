@@ -26,6 +26,8 @@ import java.util.List;
 
 import LoginAndRegister.LoginFragment;
 import LoginAndRegister.RegisterFragment;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by leet on 17-11-26.
@@ -33,21 +35,22 @@ import LoginAndRegister.RegisterFragment;
 
 public class LoginActivity extends FragmentActivity {
     FragmentManager fragmentManager=getSupportFragmentManager();
+    @BindView(R.id.logintext)
     TextView logintext;
+    @BindView(R.id.registext)
     TextView registtext;
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        logintext=findViewById(R.id.logintext);
-        registtext=findViewById(R.id.registext);
+        ButterKnife.bind(this);
         LoginFragment loginFragment=new LoginFragment();
         RegisterFragment registerFragment=new RegisterFragment();
         final List<Fragment> list=new ArrayList<Fragment>();
         list.add(loginFragment);
         list.add(registerFragment);
-        viewPager=(ViewPager) findViewById(R.id.viewpager);
         FragmentPagerAdapter fragmentPagerAdapter=new FragmentPagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {

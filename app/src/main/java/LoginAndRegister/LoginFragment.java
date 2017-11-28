@@ -1,6 +1,5 @@
 package LoginAndRegister;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.dd.CircularProgressButton;
-import com.example.leet.graduatedesign.MainActivity;
 import com.example.leet.graduatedesign.R;
 
 import MyThread.LoginThread;

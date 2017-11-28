@@ -6,11 +6,41 @@
     android:layout_height="match_parent"
     tools:context="com.example.leet.graduatedesign.MainActivity">
 
-   <Button
+   <RelativeLayout
+       android:id="@+id/personhead"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:id="@+id/jump"
-       android:text="跳转"
-       android:textSize="25sp"/>
+       android:layout_height="60dp"
+       android:background="@drawable/headbg"
+       android:orientation="horizontal"
+       tools:layout_editor_absoluteX="8dp"
+       tools:layout_editor_absoluteY="0dp">
+
+      <ImageView
+          android:id="@+id/person"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="10dp"
+          android:src="@drawable/person" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="同讯录"
+          android:textColor="#fff"
+          android:textSize="22sp"
+          android:layout_centerVertical="true"
+          android:layout_centerHorizontal="true" />
+      <ImageView
+          android:id="@+id/scan"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="10dp"
+          android:layout_alignParentRight="true"
+          android:src="@drawable/scan"
+
+          />
+   </RelativeLayout>
 
 </LinearLayout>
