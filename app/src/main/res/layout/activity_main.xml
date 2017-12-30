@@ -12,7 +12,7 @@
        android:id="@+id/personhead"
        android:layout_width="match_parent"
        android:layout_height="60dp"
-       android:background="@drawable/headbg"
+       android:background="#676767"
        android:orientation="horizontal"
        tools:layout_editor_absoluteX="8dp"
        tools:layout_editor_absoluteY="0dp">
@@ -23,7 +23,7 @@
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
           android:layout_marginLeft="10dp"
-          android:src="@drawable/person" />
+          android:src="@drawable/out" />
 
       <TextView
           android:layout_width="wrap_content"

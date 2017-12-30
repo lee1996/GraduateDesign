@@ -39,7 +39,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.mylhyl:zxingscanner:2.0.0'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-
+    compile 'cc.duduhuo.dialog:smartisan-dialog:1.0.0'
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
 }
 repositories {
     mavenCentral()

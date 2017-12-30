@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -19,7 +21,11 @@ import java.util.Map;
 import Adapter.MyAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.duduhuo.dialog.smartisan.SmartisanDialog;
+import cc.duduhuo.dialog.smartisan.WarningDialog;
 import kotlin.collections.MapsKt;
+
+import static cc.duduhuo.dialog.smartisan.SmartisanDialog.createWarningDialog;
 
 /**
  * Created by leet on 17-11-28.
@@ -39,11 +45,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        final WarningDialog dialog= SmartisanDialog.createWarningDialog(this);
         person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(intent);
+                dialog.setTitle("确定退出登录吗？").setConfirmText("退出登录").show();
+                dialog.setOnConfirmListener(new WarningDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        Toast.makeText(MainActivity.this, "退出登录", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             }
         });
         scan.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +66,8 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,ScanActivity.class);
                 startActivity(intent);
+//                Intent intent=new Intent(MainActivity.this,CertainActivity.class);
+//                startActivity(intent);
             }
         });
         fab.attachToListView(listView);
@@ -67,4 +84,6 @@ public class MainActivity extends Activity {
         listView.setAdapter(myAdapter);
 
     }
+
+
 }

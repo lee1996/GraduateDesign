@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.example.leet.graduatedesign.LoginActivity">
+    tools:context="com.example.leet.graduatedesign.LoginActivity"
+    >
         <TextView
             android:layout_marginTop="60dp"
             android:layout_gravity="center"

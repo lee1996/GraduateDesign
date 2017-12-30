@@ -7,11 +7,20 @@ package MyThread;
 public class LoginThread extends Thread {
     @Override
     public void run() {
-        super.run();
+//        super.run();
         try {
             sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean test()  {
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
