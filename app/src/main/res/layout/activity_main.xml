@@ -8,42 +8,47 @@
     tools:context="com.example.leet.graduatedesign.MainActivity"
     android:orientation="vertical">
 
-   <RelativeLayout
+   <LinearLayout
        android:id="@+id/personhead"
        android:layout_width="match_parent"
-       android:layout_height="60dp"
-       android:background="#676767"
-       android:orientation="horizontal"
-       tools:layout_editor_absoluteX="8dp"
-       tools:layout_editor_absoluteY="0dp">
+       android:layout_height="80dp"
+       android:background="#8B795E"
+       android:orientation="horizontal">
+      <!--tools:layout_editor_absoluteX="8dp"-->
+      <!--tools:layout_editor_absoluteY="0dp">-->
 
       <ImageView
           android:id="@+id/person"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
-          android:layout_marginLeft="10dp"
-          android:src="@drawable/out" />
+          android:paddingRight="53dp"
+          android:layout_marginTop="35dp"
+          android:layout_weight="1"
+          android:src="@drawable/dot" />
+      <!--android:layout_centerVertical="true"　          -->
 
       <TextView
-          android:layout_width="wrap_content"
+          android:layout_marginTop="13dp"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:gravity="center"
           android:text="同讯录"
           android:textColor="#fff"
-          android:textSize="22sp"
-          android:layout_centerVertical="true"
-          android:layout_centerHorizontal="true" />
+          android:textSize="22sp" />
+      <!--android:layout_centerVertical="true" android:layout_marginTop="45dp"-->
+      <!--android:layout_centerHorizontal="true"-->
       <ImageView
           android:id="@+id/scan"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
-          android:layout_marginRight="10dp"
-          android:layout_alignParentRight="true"
-          android:src="@drawable/scan"
+          android:paddingLeft="50dp"
+          android:layout_marginTop="35dp"
+          android:layout_weight="1"
+          android:src="@drawable/scanning" />
+   </LinearLayout>
 
-          />
-   </RelativeLayout>
    <FrameLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent">

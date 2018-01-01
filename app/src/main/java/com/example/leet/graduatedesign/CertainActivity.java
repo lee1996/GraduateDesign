@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
+import Base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -14,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by leet on 17-12-5.
  */
 
-public class CertainActivity extends Activity {
+public class CertainActivity extends BaseActivity {
     @BindView(R.id.certain)
     Button certain;
     @BindView(R.id.cancel)

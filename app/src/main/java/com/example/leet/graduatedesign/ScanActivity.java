@@ -24,6 +24,7 @@ import com.mylhyl.zxing.scanner.common.Scanner;
 import com.mylhyl.zxing.scanner.result.AddressBookResult;
 
 
+import Base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by leet on 17-11-28.
  */
 
-public class ScanActivity extends Activity {
+public class ScanActivity extends BaseActivity {
     @BindView(R.id.scancamera)
     ScannerView scannerView;
     @BindView(R.id.back)
@@ -41,7 +42,6 @@ public class ScanActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
         ButterKnife.bind(this);
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

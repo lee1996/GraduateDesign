@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.MyAdapter;
+import Base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
@@ -31,7 +32,7 @@ import static cc.duduhuo.dialog.smartisan.SmartisanDialog.createWarningDialog;
  * Created by leet on 17-11-28.
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.person)
     ImageView person;
     @BindView(R.id.scan)
@@ -82,6 +83,16 @@ public class MainActivity extends Activity {
         list.add(maps2);
         MyAdapter myAdapter=new MyAdapter(this,list);
         listView.setAdapter(myAdapter);
+
+        //增加
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,AddActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.in,R.anim.activity_stay);
+            }
+        });
 
     }
 

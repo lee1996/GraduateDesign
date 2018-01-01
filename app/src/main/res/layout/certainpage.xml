@@ -25,7 +25,7 @@
         android:gravity="center"
         android:background="@drawable/certainbg"
         android:text="登 录"
-        android:textColor="#f0f0"/>
+        android:textColor="#00cc33"/>
     <Button
         android:id="@+id/cancel"
         android:background="@drawable/cancellog"

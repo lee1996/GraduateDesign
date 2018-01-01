@@ -24,6 +24,7 @@ import com.dd.CircularProgressButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import Base.BaseActivity;
 import LoginAndRegister.LoginFragment;
 import LoginAndRegister.RegisterFragment;
 import butterknife.BindView;
