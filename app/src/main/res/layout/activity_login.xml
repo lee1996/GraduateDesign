@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="33sp"
-            android:text="同讯录"
+            android:text="健康档案"
             android:textColor="#000"
             android:elegantTextHeight="true"
             android:textStyle="bold"/>

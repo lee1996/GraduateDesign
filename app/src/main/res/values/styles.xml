@@ -1,16 +1,76 @@
 <resources>
 
     <!-- Base application theme. -->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
+
+    <!--<style name="Transparent" parent="android:Theme.Light">-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+    <!--</style>-->
+    <!--<style name="JK.SwipeBack.Transparent.Theme" parent="AppTheme">-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/JK.Animation.SlidingBack</item>-->
+        <!--<item name="android:actionBarStyle">@style/JKActionBar.Custom</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
+    <!--<style name="JKActionBar.Custom" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">-->
+        <!--<item name="android:displayOptions">showCustom</item>-->
+        <!--<item name="android:background">@android:color/transparent</item>-->
+        <!--<item name="background">@android:color/transparent</item>-->
+        <!--<item name="android:height">?actionBarSize</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
+    <!--<style name="JK.Animation.SlidingBack" parent="@android:style/Animation.Activity">-->
+        <!--<item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/out</item>-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/in_from_right</item>-->
+        <!--<item name="android:activityCloseExitAnimation">@anim/out</item>-->
+        <!--<item name="android:wallpaperOpenEnterAnimation">@anim/in_from_right</item>-->
+        <!--<item name="android:wallpaperOpenExitAnimation">@anim/out</item>-->
+        <!--<item name="android:wallpaperCloseEnterAnimation">@anim/in_from_right</item>-->
+        <!--<item name="android:wallpaperCloseExitAnimation">@anim/out</item>-->
+        <!--<item name="android:wallpaperIntraOpenEnterAnimation">@anim/in_from_right</item>-->
+        <!--<item name="android:wallpaperIntraOpenExitAnimation">@anim/out</item>-->
+        <!--<item name="android:wallpaperIntraCloseEnterAnimation">@anim/in_from_right</item>-->
+        <!--<item name="android:wallpaperIntraCloseExitAnimation">@anim/out</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="Transparent" parent="android:Theme.Light">
         <item name="android:windowIsTranslucent">true</item>
     </style>
-
-
+    <style name="JK.SwipeBack.Transparent.Theme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/JK.Animation.SlidingBack</item>
+        <item name="android:actionBarStyle">@style/JKActionBar.Custom</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="JKActionBar.Custom" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:displayOptions">showCustom</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="android:height">?actionBarSize</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="JK.Animation.SlidingBack" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/in_from_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/out</item>
+        <item name="android:wallpaperOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:wallpaperOpenExitAnimation">@anim/out</item>
+        <item name="android:wallpaperCloseEnterAnimation">@anim/in_from_right</item>
+        <item name="android:wallpaperCloseExitAnimation">@anim/out</item>
+        <item name="android:wallpaperIntraOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:wallpaperIntraOpenExitAnimation">@anim/out</item>
+        <item name="android:wallpaperIntraCloseEnterAnimation">@anim/in_from_right</item>
+        <item name="android:wallpaperIntraCloseExitAnimation">@anim/out</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

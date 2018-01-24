@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
     <LinearLayout
         android:id="@+id/personhead"
         android:layout_width="match_parent"
@@ -14,14 +16,13 @@
         <!--tools:layout_editor_absoluteY="0dp">-->
 
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/heighttomain"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:paddingRight="53dp"
             android:layout_marginTop="37dp"
             android:layout_weight="1"
             android:src="@drawable/back" />
-        <!--android:layout_centerVertical="true"　          -->
 
         <TextView
             android:layout_marginTop="13dp"
@@ -30,20 +31,39 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="扫描登录"
+            android:text="身高"
             android:textColor="#fff"
             android:textSize="22sp" />
         <!--android:layout_centerVertical="true" android:layout_marginTop="45dp"-->
         <!--android:layout_centerHorizontal="true"-->
-        <TextView
+        <ImageView
+            android:id="@+id/save_height"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_height="30dp"
+            android:paddingLeft="50dp"
+            android:layout_marginTop="37dp"
+            android:layout_weight="1"
+            android:src="@drawable/save" />
     </LinearLayout>
-<com.mylhyl.zxing.scanner.ScannerView
-    android:id="@+id/scancamera"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</com.mylhyl.zxing.scanner.ScannerView>
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/update_height"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="80dp"
+        android:hint="身高"
+        android:layout_width="match_parent"
+        android:inputType="numberDecimal"
+        app:met_clearButton="true"
+        app:met_baseColor="#848484"
+        app:met_primaryColor="#212121"
+        app:met_errorColor="#f00"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelText="身高"
+        app:met_singleLineEllipsis="true"
+        app:met_floatingLabelTextColor="#000"
+        app:met_minCharacters="0"
+        app:met_maxCharacters="8"
+        />
 </LinearLayout>

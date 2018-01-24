@@ -19,9 +19,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" android:launchMode="singleTask"/>
-        <activity android:name=".ScanActivity" />
+        <activity android:name=".ScanActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name=".CertainActivity"/>
         <activity android:name=".AddActivity" />
+        <activity android:name="Update.HeightUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name="Update.WeightUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name="Update.LeftEyeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name="Update.RightEyeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name="Update.BloodTypeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
     </application>
-<uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
