@@ -13,8 +13,7 @@ import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.leon.lib.settingview.LSettingItem;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureMimeType;
+
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -124,6 +123,13 @@ public class MainActivity extends Activity {
             @Override
             public void click(boolean isChecked) {
                 Intent intent=new Intent(getApplicationContext(), BloodTypeUpdateActivity.class);
+                startActivity(intent);
+            }
+        });
+        detail_picture.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
+            @Override
+            public void click(boolean isChecked) {
+                Intent intent=new Intent(getApplicationContext(),PictureActivity.class);
                 startActivity(intent);
             }
         });

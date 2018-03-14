@@ -126,6 +126,15 @@
           leon:rightText="A"
           />
       <com.leon.lib.settingview.LSettingItem
+          android:id="@+id/bloodPressure"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="#fff"
+          leon:leftText="血压"
+          leon:isShowRightText="true"
+          leon:rightText="150/55"
+          />
+      <com.leon.lib.settingview.LSettingItem
           android:id="@+id/detail_picture"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
