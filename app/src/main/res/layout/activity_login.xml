@@ -5,9 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.leet.graduatedesign.LoginActivity"
+    android:background="@drawable/loginbackground"
     >
         <TextView
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="110dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,51 +20,57 @@
         <LinearLayout
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="45dp"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/logintext"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="登 录"
-                android:textColor="@color/cpb_blue"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-            <TextView
-                android:id="@+id/registext"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textColor="@color/cpb_red"
-                android:text="注 册"
-                android:textSize="18sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#999"/>
     <LinearLayout
-
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
-       <android.support.v4.view.ViewPager
-           android:id="@+id/viewpager"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center">
-
-       </android.support.v4.view.ViewPager>
-
+        <EditText
+            android:id="@+id/loginuser"
+            android:paddingLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="用户名"
+            android:textColorHint="#999"
+            android:textSize="18sp"
+            android:background="@drawable/edit_bg"
+            />
+        <EditText
+            android:id="@+id/loginpwd"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="密码"
+            android:maxLength="13"
+            android:textColorHint="#999"
+            android:textSize="18sp"
+            android:background="@drawable/edit_bg"
+            android:password="true"/>
+        <com.dd.CircularProgressButton
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/login"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            app:cpb_textComplete="Complete"
+            app:cpb_textError="Error"
+            app:cpb_textIdle="登 录"
+            app:cpb_cornerRadius="3dp"/>
     </LinearLayout>
 </LinearLayout>

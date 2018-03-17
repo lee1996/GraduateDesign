@@ -3,6 +3,7 @@ package com.example.leet.graduatedesign;
 import android.app.Activity;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,8 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Base.BaseActivity;
-import LoginAndRegister.LoginFragment;
-import LoginAndRegister.RegisterFragment;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,53 +34,24 @@ import butterknife.ButterKnife;
  * Created by leet on 17-11-26.
  */
 
-public class LoginActivity extends FragmentActivity {
-    FragmentManager fragmentManager=getSupportFragmentManager();
-    @BindView(R.id.logintext)
-    TextView logintext;
-    @BindView(R.id.registext)
-    TextView registtext;
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
+public class LoginActivity extends BaseActivity {
+   @BindView(R.id.loginuser)
+   EditText loginuser;
+   @BindView(R.id.loginpwd)
+   EditText loginpwd;
+   @BindView(R.id.login)
+   CircularProgressButton login;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        LoginFragment loginFragment=new LoginFragment();
-        RegisterFragment registerFragment=new RegisterFragment();
-        final List<Fragment> list=new ArrayList<Fragment>();
-        list.add(loginFragment);
-        list.add(registerFragment);
-        FragmentPagerAdapter fragmentPagerAdapter=new FragmentPagerAdapter(fragmentManager) {
-            @Override
-            public Fragment getItem(int position) {
-//                if(position==0){
-//                    logintext.setTextColor(R.color.cpb_blue);
-//                    registtext.setTextColor(R.color.cpb_grey);
-//                }
-//                if(position==1){
-//                    logintext.setTextColor(R.color.cpb_grey);
-//                    registtext.setTextColor(R.color.cpb_blue);
-//                }
-                return list.get(position);
-            }
-            @Override
-            public int getCount() {
-                return list.size();
-            }
-        };
-        viewPager.setAdapter(fragmentPagerAdapter);
-        logintext.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(0);
-            }
-        });
-        registtext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(1);
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

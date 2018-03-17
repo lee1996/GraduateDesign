@@ -2,22 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.leet.graduatedesign">
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:theme="@style/AppTheme"
+        android:name="Application.MyApplication">
+        <activity android:name=".LoginActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name=".RegisterActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name=".MainActivity" android:launchMode="singleTask"/>
         <activity android:name=".ScanActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name=".CertainActivity"/>
@@ -27,8 +21,15 @@
         <activity android:name="Update.LeftEyeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name="Update.RightEyeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name="Update.BloodTypeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name="Update.BloodPreUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name=".PictureActivity"  android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name=".WelcomeActivity"  android:theme="@style/JK.SwipeBack.Transparent.Theme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

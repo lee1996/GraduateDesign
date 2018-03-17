@@ -22,7 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.MyAdapter;
+import Application.MyApplication;
 import Base.BaseActivity;
+import Entity.UserDao;
+import Update.BloodPreUpdateActivity;
 import Update.BloodTypeUpdateActivity;
 import Update.HeightUpdateActivity;
 import Update.LeftEyeUpdateActivity;
@@ -57,6 +60,8 @@ public class MainActivity extends Activity {
     LSettingItem bloodType;
     @BindView(R.id.detail_picture)
     LSettingItem detail_picture;
+    @BindView(R.id.bloodPressure)
+    LSettingItem bloodPressure;
     private ImmersionBar mImmersionBar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +128,13 @@ public class MainActivity extends Activity {
             @Override
             public void click(boolean isChecked) {
                 Intent intent=new Intent(getApplicationContext(), BloodTypeUpdateActivity.class);
+                startActivity(intent);
+            }
+        });
+        bloodPressure.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
+            @Override
+            public void click(boolean isChecked) {
+                Intent intent=new Intent(getApplicationContext(), BloodPreUpdateActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,11 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.example.leet.graduatedesign.LoginActivity"
+    android:background="@drawable/registbackground"
+    >
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="33sp"
+        android:text="健康档案"
+        android:textColor="#000"
+        android:elegantTextHeight="true"
+        android:textStyle="bold"/>
     <LinearLayout
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
@@ -22,7 +33,7 @@
         android:orientation="vertical"
         >
         <EditText
-            android:id="@+id/loginuser"
+            android:id="@+id/registeruser"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -34,16 +45,30 @@
             android:background="@drawable/edit_bg"
             />
         <EditText
-            android:id="@+id/loginpwd"
+            android:id="@+id/registerpwd"
             android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="密码"
-            android:maxLength="13"
+            android:hint="密码(6~13位)"
             android:textColorHint="#999"
+            android:textSize="18sp"
+            android:background="@drawable/edit_bg"
+            android:maxLength="13"
+            android:password="true"/>
+        <EditText
+            android:id="@+id/registerpwdcon"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="确认密码(6~13位)"
+            android:textColorHint="#999"
+            android:maxLength="13"
             android:textSize="18sp"
             android:background="@drawable/edit_bg"
             android:password="true"/>
@@ -51,7 +76,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/login"
+            android:id="@+id/register"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -59,7 +84,8 @@
             android:textSize="18sp"
             app:cpb_textComplete="Complete"
             app:cpb_textError="Error"
-            app:cpb_textIdle="登 录"
-            app:cpb_cornerRadius="3dp"/>
+            app:cpb_textIdle="注 册"
+            app:cpb_cornerRadius="3dp"
+            />
     </LinearLayout>
 </LinearLayout>
