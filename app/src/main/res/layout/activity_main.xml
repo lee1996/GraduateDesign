@@ -73,6 +73,7 @@
              android:layout_height="50dp"
              android:src="@drawable/dog"/>
          <TextView
+             android:id="@+id/user"
              android:layout_marginLeft="20dp"
              android:layout_gravity="center"
              android:layout_width="wrap_content"

@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -24,6 +25,7 @@ import java.util.Map;
 import Adapter.MyAdapter;
 import Application.MyApplication;
 import Base.BaseActivity;
+import Entity.HeightDao;
 import Entity.UserDao;
 import Update.BloodPreUpdateActivity;
 import Update.BloodTypeUpdateActivity;
@@ -44,6 +46,8 @@ import static cc.duduhuo.dialog.smartisan.SmartisanDialog.createWarningDialog;
  */
 
 public class MainActivity extends Activity {
+    @BindView(R.id.user)
+    TextView user;
     @BindView(R.id.person)
     ImageView person;
     @BindView(R.id.scan)
@@ -70,7 +74,10 @@ public class MainActivity extends Activity {
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
         ButterKnife.bind(this);
+        user.setText(getIntent().getStringExtra("username"));
         final WarningDialog dialog= SmartisanDialog.createWarningDialog(this);
+        UserDao userDao=MyApplication.getInstances().getDaoSession().getUserDao();
+        HeightDao heightDao=MyApplication.getInstances().getDaoSession().getHeightDao();
         person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

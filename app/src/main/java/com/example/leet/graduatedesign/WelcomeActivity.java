@@ -9,7 +9,12 @@ import android.widget.Button;
 
 import com.gyf.barlibrary.ImmersionBar;
 
+import java.util.List;
+
+import Application.MyApplication;
 import Base.BaseActivity;
+import Entity.User;
+import Entity.UserDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -44,6 +49,8 @@ public class WelcomeActivity extends Activity {
                 startActivity(intent);
             }
         });
+        UserDao userDao= MyApplication.getInstances().getDaoSession().getUserDao();
+        List<User> list=userDao.loadAll();
     }
 
     @Override

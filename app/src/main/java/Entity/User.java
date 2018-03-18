@@ -23,6 +23,10 @@ public class User {
     @Generated(hash = 586692638)
     public User() {
     }
+    public User(String username,String password){
+        this.username=username;
+        this.password=password;
+    }
     public Long get_id() {
         return this._id;
     }
