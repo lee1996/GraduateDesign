@@ -7,6 +7,7 @@ import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -76,8 +77,11 @@ public class LoginActivity extends BaseActivity {
                 int i = 0;
                 for (User user : list) {
                     if (loginuser.getText().toString().equals(user.getUsername()) && loginpwd.getText().toString().equals(user.getPassword())) {
-
-                        //Log.i("phonenum","电话号码是"+phonenum);
+                        SharedPreferences sharedPreferences=LoginActivity.this.getSharedPreferences("data",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putBoolean("isLogin",true);
+                        editor.putString("username",loginuser.getText().toString());
+                        editor.commit();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("username",loginuser.getText().toString());
                         startActivity(intent);

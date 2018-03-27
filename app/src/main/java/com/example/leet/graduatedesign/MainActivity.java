@@ -2,6 +2,7 @@ package com.example.leet.graduatedesign;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -87,6 +88,7 @@ public class MainActivity extends Activity {
     private final BloodTypeDao bloodTypeDao=MyApplication.getInstances().getDaoSession().getBloodTypeDao();
     private final BloodPreDao bloodPreDao=MyApplication.getInstances().getDaoSession().getBloodPreDao();
     String username;
+    private long firstTime = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +107,9 @@ public class MainActivity extends Activity {
                     @Override
                     public void onConfirm() {
                         Toast.makeText(MainActivity.this, "退出登录", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putBoolean("isLogin",false);
                         Intent intent=new Intent(MainActivity.this,LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -221,6 +226,17 @@ public class MainActivity extends Activity {
         super.onDestroy();
         if (mImmersionBar != null)
             mImmersionBar.destroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - firstTime > 2000) {
+            Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            firstTime = secondTime;
+        } else {
+            System.exit(0);
+        }
     }
 
 }

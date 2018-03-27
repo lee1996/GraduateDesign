@@ -51,6 +51,7 @@ public class LeftEyeUpdateActivity extends BaseActivity {
         lefttomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 finish();
             }
         });

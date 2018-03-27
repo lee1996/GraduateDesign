@@ -2,6 +2,7 @@ package com.example.leet.graduatedesign;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -35,9 +36,21 @@ public class WelcomeActivity extends Activity {
         ButterKnife.bind(this);
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
+        SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
+        boolean isLogin=sharedPreferences.getBoolean("isLogin",false);
+        if(isLogin==true){
+            Intent intent=new Intent(WelcomeActivity.this,MainActivity.class);
+            intent.putExtra("username",sharedPreferences.getString("username","username"));
+            startActivity(intent);
+            finish();
+        }
         tologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences=WelcomeActivity.this.getSharedPreferences("data",MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putBoolean("isLogin",false);
+                editor.commit();
                 Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
@@ -45,6 +58,10 @@ public class WelcomeActivity extends Activity {
         toregist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences=WelcomeActivity.this.getSharedPreferences("data",MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putBoolean("isLogin",false);
+                editor.commit();
                 Intent intent=new Intent(WelcomeActivity.this,RegisterActivity.class);
                 startActivity(intent);
             }

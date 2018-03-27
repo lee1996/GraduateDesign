@@ -54,6 +54,7 @@ public class BloodPreUpdateActivity extends BaseActivity {
         backtomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 finish();
             }
         });
