@@ -53,7 +53,7 @@
         android:layout_height="80dp"
         android:hint="血型"
         android:layout_width="match_parent"
-        android:inputType="numberDecimal"
+        android:inputType="textCapWords"
         app:met_clearButton="true"
         app:met_baseColor="#848484"
         app:met_primaryColor="#212121"

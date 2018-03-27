@@ -13,18 +13,18 @@ public class Height {
     private Long _id;
     private String height;
     private String user;
-    private Integer time;
-    @Generated(hash = 2121980464)
-    public Height(Long _id, String height, String user, Integer time) {
+    private Long time;
+    @Generated(hash = 826249657)
+    public Height(Long _id, String height, String user, Long time) {
         this._id = _id;
         this.height = height;
         this.user = user;
         this.time = time;
     }
-    public Height(String height,String user,Integer time){
-        this.height=height;
-        this.user=user;
-        this.time=time;
+    public Height(String height, String user, Long time){
+        this.height = height;
+        this.user = user;
+        this.time = time;
     }
     @Generated(hash = 2023076513)
     public Height() {
@@ -47,10 +47,11 @@ public class Height {
     public void setUser(String user) {
         this.user = user;
     }
-    public Integer getTime() {
+    public Long getTime() {
         return this.time;
     }
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
+
 }

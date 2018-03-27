@@ -45,7 +45,10 @@
             android:layout_weight="1"
             android:src="@drawable/save" />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/update_shousuo"
         android:layout_marginTop="25dp"
@@ -53,7 +56,8 @@
         android:layout_marginRight="20dp"
         android:layout_height="80dp"
         android:hint="收缩压"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="9"
         android:inputType="numberDecimal"
         app:met_clearButton="true"
         app:met_baseColor="#848484"
@@ -66,6 +70,19 @@
         app:met_minCharacters="0"
         app:met_maxCharacters="8"
         />
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="mmHg"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/update_shuzhang"
         android:layout_marginTop="15dp"
@@ -73,7 +90,8 @@
         android:layout_marginRight="20dp"
         android:layout_height="80dp"
         android:hint="舒张压"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="9"
         android:inputType="numberDecimal"
         app:met_clearButton="true"
         app:met_baseColor="#848484"
@@ -86,4 +104,13 @@
         app:met_minCharacters="0"
         app:met_maxCharacters="8"
         />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="mmHg"
+        android:textSize="20sp"/>
+</LinearLayout>
 </LinearLayout>
