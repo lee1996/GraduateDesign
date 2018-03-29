@@ -27,6 +27,9 @@ import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.tools.PictureFileUtils;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +60,6 @@ public class PictureActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
         ButterKnife.bind(this);
-        File file=new File(Environment.getExternalStorageDirectory(), "/temp/"+System.currentTimeMillis() + ".jpg");
-        if (!file.getParentFile().exists())file.getParentFile().mkdirs();
-        final Uri imageUri = Uri.fromFile(file);
         pictomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,10 +67,11 @@ public class PictureActivity extends BaseActivity {
             }
         });
         FullyGridLayoutManager manager = new FullyGridLayoutManager(PictureActivity.this, 4, GridLayoutManager.VERTICAL, false);
+        getAllFiles("/storage/emulated/0/custom file/");
         recyclerView.setLayoutManager(manager);
         adapter = new GridImageAdapter(PictureActivity.this, onAddPicClickListener);
         adapter.setList(selectList);
-        adapter.setSelectMax(10);
+        adapter.setSelectMax(100);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
@@ -83,7 +84,7 @@ public class PictureActivity extends BaseActivity {
                         case 1:
                             // 预览图片 可自定长按保存路径
                             //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
-                            PictureSelector.create(PictureActivity.this).externalPicturePreview(position, selectList);
+                            PictureSelector.create(PictureActivity.this).externalPicturePreview(position,"/custom file", selectList);
                             break;
                         case 2:
                             // 预览视频
@@ -123,6 +124,8 @@ public class PictureActivity extends BaseActivity {
             }
         });
 
+        //测试获取文件夹中所有文件
+
     }
 
     private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
@@ -134,7 +137,7 @@ public class PictureActivity extends BaseActivity {
                 PictureSelector.create(PictureActivity.this)
                         .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                         // 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
-                        .maxSelectNum(8)// 最大图片选择数量
+                        .maxSelectNum(100)// 最大图片选择数量
                         .minSelectNum(1)// 最小选择数量
                         .imageSpanCount(4)// 每行显示个数
                         .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
@@ -257,5 +260,47 @@ public class PictureActivity extends BaseActivity {
 //        }
 //    }
 
+    public  void getAllFiles(String dirPath) {
+        File f = new File(dirPath);
+        if (!f.exists()) {//判断路径是否存在
+            return ;
+        }
 
+        File[] files = f.listFiles();
+
+        if(files==null){//判断权限
+            return ;
+        }
+
+        JSONArray fileList = new JSONArray();
+        for (File _file : files) {//遍历目录
+            if((_file.isFile() && _file.getName().endsWith("png"))||(_file.isFile() && _file.getName().endsWith("jpg"))){
+                String _name=_file.getName();
+                String filePath = _file.getAbsolutePath();//获取文件路径
+                String fileName = _file.getName().substring(0,_name.length()-4);//获取文件名
+                Log.d("LOGCAT","fileName:"+fileName);
+                Log.d("LOGCAT","filePath:"+filePath);
+                LocalMedia media=new LocalMedia();
+                media.setPath(filePath);
+                selectList.add(media);
+                try {
+                    JSONObject _fInfo = new JSONObject();
+                    _fInfo.put("name", fileName);
+                    _fInfo.put("path", filePath);
+                    fileList.put(_fInfo);
+                }catch (Exception e){
+                }
+            } else if(_file.isDirectory()){//查询子目录
+                getAllFiles(_file.getAbsolutePath());
+            } else{
+            }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //selectList=new ArrayList<>();
+    }
 }

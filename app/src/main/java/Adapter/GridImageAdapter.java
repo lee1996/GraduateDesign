@@ -132,7 +132,11 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                     // 这里有时会返回-1造成数据下标越界,具体可参考getAdapterPosition()源码，
                     // 通过源码分析应该是bindViewHolder()暂未绘制完成导致，知道原因的也可联系我~感谢
                     if (index != RecyclerView.NO_POSITION) {
+                        String media=list.get(index).getPath();
                         list.remove(index);
+                        File file=new File(media);
+                        if(file.isFile())
+                            file.delete();
                         notifyItemRemoved(index);
                         notifyItemRangeChanged(index, list.size());
                     }

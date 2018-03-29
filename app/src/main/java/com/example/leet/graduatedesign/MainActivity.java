@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,8 @@ import static cc.duduhuo.dialog.smartisan.SmartisanDialog.createWarningDialog;
  */
 
 public class MainActivity extends Activity {
+    @BindView(R.id.main)
+    LinearLayout main;
     @BindView(R.id.user)
     TextView user;
     @BindView(R.id.person)
@@ -79,6 +82,7 @@ public class MainActivity extends Activity {
     LSettingItem detail_picture;
     @BindView(R.id.bloodPressure)
     LSettingItem bloodPressure;
+
     private ImmersionBar mImmersionBar;
     private final UserDao userDao=MyApplication.getInstances().getDaoSession().getUserDao();
     private final HeightDao heightDao=MyApplication.getInstances().getDaoSession().getHeightDao();
@@ -99,6 +103,14 @@ public class MainActivity extends Activity {
         username=getIntent().getStringExtra("username").toString();
         user.setText(username);
         final WarningDialog dialog= SmartisanDialog.createWarningDialog(this);
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,ShowActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+            }
+        });
         person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

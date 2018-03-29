@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/personhead"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#8B795E"
+        android:orientation="horizontal">
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="0dp">-->
+
+        <ImageView
+            android:id="@+id/detailttomain"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:paddingRight="53dp"
+            android:layout_marginTop="37dp"
+            android:layout_weight="1"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_marginTop="13dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="详情"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+        <!--android:layout_centerVertical="true" android:layout_marginTop="45dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <ImageView
+            android:id="@+id/save_height"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:paddingLeft="50dp"
+            android:layout_marginTop="37dp"
+            android:layout_weight="1"
+            android:src="@drawable/save" />
+    </LinearLayout>
+
+
+    <com.github.mikephil.charting.charts.RadarChart
+        android:id="@+id/radarchart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       />
+</LinearLayout>
