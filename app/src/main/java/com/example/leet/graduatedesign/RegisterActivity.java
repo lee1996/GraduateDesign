@@ -4,12 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import Application.MyApplication;
@@ -18,6 +23,10 @@ import Entity.User;
 import Entity.UserDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Response;
+import okhttputil.CallBackUtil;
+import okhttputil.OkhttpUtil;
 
 /**
  * Created by leet on 18-3-17.
@@ -51,7 +60,9 @@ public class RegisterActivity extends BaseActivity {
                             break;
                         }
                     }
-                    if(i==list.size()){
+                    if(registerpwd.length()==0||registeruser.length()==0||registerpwdcon.length()==0){
+                        Toast.makeText(RegisterActivity.this,"请完善信息",Toast.LENGTH_SHORT).show();
+                    }else if(i==list.size()){
                         User user=new User(registeruser.getText().toString(),registerpwd.getText().toString());
                         userDao.insert(user);
                         SharedPreferences sharedPreferences=RegisterActivity.this.getSharedPreferences("data",MODE_PRIVATE);
@@ -59,6 +70,31 @@ public class RegisterActivity extends BaseActivity {
                         editor.putBoolean("isLogin",true);
                         editor.putString("username",registeruser.getText().toString());
                         editor.commit();
+                        //测试okhttp
+                        String url="http://118.89.160.240/GraduateDesign/login.action";
+                        HashMap<String, String> paramsMap = new HashMap<>();
+                        paramsMap.put("username",registeruser.getText().toString());
+                        paramsMap.put("password",registerpwd.getText().toString());
+                        OkhttpUtil.okHttpPost(url,paramsMap, new CallBackUtil() {
+                            @Override
+                            public Object onParseResponse(Call call, Response response) throws IOException {
+                                Log.i("onparseresponse",response.toString());
+                                return null;
+                            }
+
+                            @Override
+                            public void onFailure(Call call, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(Object response) {
+                                String str=response.toString();
+                                Log.i("response test",str);
+
+                            }
+                        });
+
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         intent.putExtra("username",registeruser.getText().toString());
                         startActivity(intent);
@@ -71,5 +107,13 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(RegisterActivity.this,WelcomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

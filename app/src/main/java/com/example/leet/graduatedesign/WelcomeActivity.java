@@ -53,6 +53,7 @@ public class WelcomeActivity extends Activity {
                 editor.commit();
                 Intent intent=new Intent(WelcomeActivity.this,LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         toregist.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +65,7 @@ public class WelcomeActivity extends Activity {
                 editor.commit();
                 Intent intent=new Intent(WelcomeActivity.this,RegisterActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         UserDao userDao= MyApplication.getInstances().getDaoSession().getUserDao();

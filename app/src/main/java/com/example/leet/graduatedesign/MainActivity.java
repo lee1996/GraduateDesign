@@ -122,6 +122,8 @@ public class MainActivity extends Activity {
                         SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putBoolean("isLogin",false);
+                        editor.commit();
+                        Log.i("login status","  "+sharedPreferences.getBoolean("isLogin",false));
                         Intent intent=new Intent(MainActivity.this,LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -205,7 +207,7 @@ public class MainActivity extends Activity {
         List<RightEye> listRightEye=rightEyeDao.queryBuilder().where(RightEyeDao.Properties.User.eq(username)).build().list();
         List<BloodType> listBloodType=bloodTypeDao.queryBuilder().where(BloodTypeDao.Properties.User.eq(username)).build().list();
         List<BloodPre> listBloodPre=bloodPreDao.queryBuilder().where(BloodPreDao.Properties.User.eq(username)).build().list();
-        Log.i("height "," "+listHeight);
+        //Log.i("height "," "+listHeight);
         if(listHeight.size()!=0) {
             height.setRightText(listHeight.get(listHeight.size() - 1).getHeight()+"cm");
         }
