@@ -1,5 +1,6 @@
 package com.example.leet.graduatedesign;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +19,8 @@ import com.google.zxing.client.result.AddressBookParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ParsedResultType;
 import com.google.zxing.client.result.URIParsedResult;
+import com.luck.picture.lib.permissions.RxPermissions;
+import com.luck.picture.lib.tools.PictureFileUtils;
 import com.mylhyl.zxing.scanner.OnScannerCompletionListener;
 import com.mylhyl.zxing.scanner.ScannerView;
 import com.mylhyl.zxing.scanner.common.Scanner;
@@ -27,6 +30,8 @@ import com.mylhyl.zxing.scanner.result.AddressBookResult;
 import Base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by leet on 17-11-28.
@@ -79,6 +84,30 @@ public class ScanActivity extends BaseActivity {
                         finish();
                         break;
                 }
+            }
+        });
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.request(Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if (aBoolean) {
+                    PictureFileUtils.deleteCacheDirFile(ScanActivity.this);
+                } else {
+                    Toast.makeText(ScanActivity.this, "拍照权限未被允许！", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
             }
         });
     }

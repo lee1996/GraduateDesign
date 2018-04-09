@@ -1,10 +1,11 @@
 package com.example.leet.graduatedesign;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -13,16 +14,12 @@ import android.widget.Toast;
 import com.dd.CircularProgressButton;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 
 import Application.MyApplication;
@@ -32,16 +29,12 @@ import Entity.User;
 import Entity.UserDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Response;
-import okhttputil.CallBackUtil;
-import okhttputil.OkhttpUtil;
 
 /**
  * Created by leet on 18-3-17.
  */
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends Activity {
     @BindView(R.id.registeruser)
     EditText registeruser;
     @BindView(R.id.registerpwd)
@@ -60,70 +53,85 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if(!(registerpwd.getText().toString().equals(registerpwdcon.getText().toString()))){
-                    Toast.makeText(RegisterActivity.this,"请再次确认密码是否正确",Toast.LENGTH_SHORT).show();
-                }else {
-                    List<User> list=userDao.loadAll();
-                    int i;
-                    for(i=0;i<list.size();i++){
-                        if(list.get(i).getUsername().equals(registeruser.getText().toString())){
-                            break;
-                        }
-                    }
-                    if(registerpwd.length()==0||registeruser.length()==0||registerpwdcon.length()==0){
-                        Toast.makeText(RegisterActivity.this,"请完善信息",Toast.LENGTH_SHORT).show();
-                    }else if(i==list.size()){
-                        User user=new User(registeruser.getText().toString(),registerpwd.getText().toString());
-                        userDao.insert(user);
-                        SharedPreferences sharedPreferences=RegisterActivity.this.getSharedPreferences("data",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=sharedPreferences.edit();
-                        editor.putBoolean("isLogin",true);
-                        editor.putString("username",registeruser.getText().toString());
-                        editor.commit();
-                        //测试okhttp
-                      //  String url="http://118.89.160.240/GraduateDesign/login.action";
-                        new Thread(new Runnable(){
-                            @Override
-                            public void run() {
-                                URL url1= null;
-                                try {
-                                    url1 = new URL("http://118.89.160.240:8080/GraduateDesign/login.action?username=liyu&password=123456");
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                }
-                                String result= null;
-                                try {
-                                    result = downloadUrl(url1);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Log.i("response","  "+result);
+                    Toast.makeText(RegisterActivity.this,"请再次确认密码是否正确！",Toast.LENGTH_SHORT).show();
+                }else if(registerpwd.getText().length()<6) {
+                    Toast.makeText(RegisterActivity.this,"密码强度不够！",Toast.LENGTH_SHORT).show();
+                }else{
+                        List<User> list=userDao.loadAll();
+                        int i;
+                        for(i=0;i<list.size();i++){
+                            if(list.get(i).getUsername().equals(registeruser.getText().toString())){
+                                break;
                             }
-                        }).start();
+                        }
+                        if(registerpwd.length()==0||registeruser.length()==0||registerpwdcon.length()==0){
+                            Toast.makeText(RegisterActivity.this,"请完善信息",Toast.LENGTH_SHORT).show();
+                        }else if(i==list.size()){
+                            User user=new User(registeruser.getText().toString(),registerpwd.getText().toString());
+                            userDao.insert(user);
+                            SharedPreferences sharedPreferences=RegisterActivity.this.getSharedPreferences("data",MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            editor.putBoolean("isLogin",true);
+                            editor.putString("username",registeruser.getText().toString());
+                            editor.commit();
+                            //测试okhttp
+                            //  String url="http://118.89.160.240/GraduateDesign/login.action";
 
+                            new Thread(new Runnable(){
+                                @Override
+                                public void run() {
+                                    Looper.prepare();
+                                    URL url1= null;
+                                    try {
+                                        url1 = new URL("http://118.89.160.240:8080/GraduateDesign/register.action?username="+registeruser.getText().toString()
+                                                +"&password="+registerpwd.getText().toString());
+                                    } catch (MalformedURLException e) {
+                                        e.printStackTrace();
+                                    }
+                                    String result=null;
+                                    try {
+                                        result = downloadUrl(url1);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if(result.equals("0")){
+                                        Toast.makeText(RegisterActivity.this,"用户已存在",Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        intent.putExtra("username",registeruser.getText().toString());
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    Log.i("register response","  "+result);
+                                    Looper.loop();
+                                }
+                            }).start();
 
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                        intent.putExtra("username",registeruser.getText().toString());
-                        startActivity(intent);
-                        finish();
-                    }else{
-                        Toast.makeText(RegisterActivity.this,"用户已存在",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(RegisterActivity.this,"用户已存在",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-
                 }
-            }
         });
 
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         Intent intent=new Intent(RegisterActivity.this,WelcomeActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private String downloadUrl(URL url) throws IOException {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IsNetWork.checkNetwork(this);
+    }
+    private  String downloadUrl(URL url) throws IOException {
         InputStream stream = null;
         HttpURLConnection connection = null;
         String result = null;
@@ -134,13 +142,14 @@ public class RegisterActivity extends BaseActivity {
             connection.setReadTimeout(3000);
             // Timeout for connection.connect() arbitrarily set to 3000ms.
             connection.setConnectTimeout(3000);
-                // For this use case, set HTTP method to GET.
-                connection.setRequestMethod("GET");
-                // Already true by default but setting just in case; needs to be true since this request
-                // is carrying an input (response) body.
-                connection.setDoInput(true);
-                // Open communications link (network traffic occurs here).
-                connection.connect();
+            // For this use case, set HTTP method to GET.
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+            // Already true by default but setting just in case; needs to be true since this request
+            // is carrying an input (response) body.
+            connection.setDoInput(true);
+            // Open communications link (network traffic occurs here).
+            connection.connect();
             // Log.d("networkfragment","  just for test");
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -179,11 +188,5 @@ public class RegisterActivity extends BaseActivity {
             }
         }
         return result;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        IsNetWork.checkNetwork(this);
     }
 }

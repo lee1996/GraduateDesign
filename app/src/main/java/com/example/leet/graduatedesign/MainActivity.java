@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +22,17 @@ import com.leon.lib.settingview.LSettingItem;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +106,28 @@ public class MainActivity extends Activity {
     private final BloodPreDao bloodPreDao=MyApplication.getInstances().getDaoSession().getBloodPreDao();
     String username;
     private long firstTime = 0;
+    private String lastheight;
+    private String lastweight;
+    private String lastleft;
+    private String lastright;
+    private String lastbt;
+    private String lastbp;
+    private String lastshuzhang;
+    private String lastshousuo;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what==1){
+                height.setRightText(lastheight);
+                weight.setRightText(lastweight);
+                leftEye.setRightText(lastleft);
+                rightEye.setRightText(lastright);
+                bloodType.setRightText(lastbt);
+                bloodPressure.setRightText(lastbp);
+            }
+            super.handleMessage(msg);
+        }
+    };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -241,7 +276,43 @@ public class MainActivity extends Activity {
         if (mImmersionBar != null)
             mImmersionBar.destroy();
     }
+    /*
+    @Override
+    protected void onStart() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String result=null;
+                try {
+                    URL url=new URL("http://118.89.160.240:8080/GraduateDesign/getlast.action?username="+username);
+                    result=downloadUrl(url);
+                    JSONObject jsonObject=new JSONObject(result);
+                    lastheight=jsonObject.getString("height")+"cm";
+                    lastweight=jsonObject.getString("weight")+"kg";
+                    lastleft=jsonObject.getString("lefteye");
+                    lastright=jsonObject.getString("righteye");
+                    lastbt=jsonObject.getString("bloodtype");
+                    lastshousuo=jsonObject.getString("shousuo");
+                    lastshuzhang=jsonObject.getString("shuzhang");
+                    lastbp=lastshousuo+"/"+lastshuzhang;
+                    Message msg=handler.obtainMessage();
+                    msg.what=1;
+                    msg.sendToTarget();
 
+                    //Log.i("all parameters","height is "+height+",weight is"+weight+",left is"+left );
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+        super.onStart();
+    }
+*/
     @Override
     public void onBackPressed() {
         long secondTime = System.currentTimeMillis();
@@ -251,6 +322,65 @@ public class MainActivity extends Activity {
         } else {
             System.exit(0);
         }
+    }
+
+    private String downloadUrl(URL url) throws IOException {
+        InputStream stream = null;
+        HttpURLConnection connection = null;
+        String result = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Content-type", "application/json");
+            // Timeout for reading InputStream arbitrarily set to 3000ms.
+            connection.setReadTimeout(3000);
+            // Timeout for connection.connect() arbitrarily set to 3000ms.
+            connection.setConnectTimeout(3000);
+            // For this use case, set HTTP method to GET.
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+            // Already true by default but setting just in case; needs to be true since this request
+            // is carrying an input (response) body.
+            connection.setDoInput(true);
+            // Open communications link (network traffic occurs here).
+            connection.connect();
+            // Log.d("networkfragment","  just for test");
+            int responseCode = connection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                throw new IOException("HTTP error code: " + responseCode);
+            }
+            // Retrieve the response body as an InputStream.
+            stream = connection.getInputStream();
+            InputStreamReader isr = new InputStreamReader(stream,"utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line = br.readLine())!=null)
+            {
+                builder.append(line);
+            }
+
+            br.close();
+            isr.close();
+            stream.close();
+            result = builder.toString();
+            Log.v("result in main is",result);
+                /*
+                if (stream != null) {
+                    // Converts Stream to String with max length of 500.
+                    result = readStream(stream,);
+                }
+                */
+
+        } finally {
+            // Close Stream and disconnect HTTPS connection.
+            if (stream != null) {
+                stream.close();
+            }
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return result;
     }
 
 }
