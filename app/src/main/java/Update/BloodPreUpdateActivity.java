@@ -21,6 +21,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import Application.MyApplication;
@@ -69,7 +71,9 @@ public class BloodPreUpdateActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 java.util.Date writeTime=new java.util.Date();
-                Log.i("time"," "+writeTime);
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.format(writeTime.getTime());
+                Log.i("time"," "+sdf.format(writeTime.getTime()));
                 BloodPre bloodPre=new BloodPre(update_shousuo.getText().toString(),update_shuzhang.getText().toString(),getIntent().getStringExtra("username"),writeTime.getTime());
                 bloodPreDao.insert(bloodPre);
                 //Toast.makeText(getApplicationContext(),update_height.getText().toString(),Toast.LENGTH_SHORT).show();

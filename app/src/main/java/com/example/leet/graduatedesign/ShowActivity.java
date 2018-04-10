@@ -1,5 +1,6 @@
 package com.example.leet.graduatedesign;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,6 +54,8 @@ public class ShowActivity extends BaseActivity {
     ImageView detailtomain;
     @BindView(R.id.radarchart)
     RadarChart mChart;
+    @BindView(R.id.other)
+    ImageView other;
 
     private final UserDao userDao= MyApplication.getInstances().getDaoSession().getUserDao();
     private final HeightDao heightDao=MyApplication.getInstances().getDaoSession().getHeightDao();
@@ -72,7 +75,15 @@ public class ShowActivity extends BaseActivity {
                 finish();
             }
         });
-
+        other.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ShowActivity.this,BpChangeActivity.class);
+                String username=getIntent().getStringExtra("username");
+                intent.putExtra("username",username);
+                startActivity(intent);
+            }
+        });
         mChart.setBackgroundColor(Color.rgb(60, 65, 82));
 
         mChart.getDescription().setEnabled(false);
