@@ -170,6 +170,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,ScanActivity.class);
+                intent.putExtra("username",username);
                 startActivity(intent);
 //                Intent intent=new Intent(MainActivity.this,CertainActivity.class);
 //                startActivity(intent);
