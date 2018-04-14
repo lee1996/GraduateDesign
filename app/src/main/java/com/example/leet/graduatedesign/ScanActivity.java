@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.ContactsContract;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
@@ -76,26 +77,73 @@ public class ScanActivity extends BaseActivity {
                         break;
                     case URI:
                         URIParsedResult uriParsedResult = (URIParsedResult) parsedResult;
-                        Toast.makeText(ScanActivity.this,uriParsedResult.getURI(),Toast.LENGTH_SHORT).show();
-                        Log.i("TAG",uriParsedResult.getURI());
-                        intent=new Intent(ScanActivity.this,CertainActivity.class);
-                        startActivity(intent);
-                        finish();
+
+                        String ur="http://192.168.121.2:8080/GraduateDesign/";
+                        Log.i("get uri",uriParsedResult.getURI());
+                        String front=uriParsedResult.getURI().substring(0,ur.length());
+                        final String username=getIntent().getStringExtra("username");
+                        final String password=getIntent().getStringExtra("password");
+                        Log.i("string length","front is "+front+" , back  length is"+rawResult.getText().toString().substring(ur.length(),rawResult.getText().toString().length()));
+                        if(ur.equals(front)){
+                            final String back=rawResult.getText().toString().substring(ur.length(),rawResult.getText().toString().length());
+                            if(back.length()==10){
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Looper.prepare();
+                                        URL url= null;
+                                        try {
+                                            url = new URL("http://118.89.160.240:8080/GraduateDesign/scanlogin.action?username="+username+"&password="+password+"&uuid="+back);
+                                            downloadUrl(url);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        Log.i("url address","  "+url);
+                                        Toast.makeText(ScanActivity.this,"登录成功！",Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        Looper.loop();
+                                    }
+                                }).start();
+
+                            }else{
+                                Toast.makeText(ScanActivity.this,"登录失败！",Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(ScanActivity.this,"登录失败！",Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+//                        intent=new Intent(ScanActivity.this,CertainActivity.class);
+//                        startActivity(intent);
+//                        finish();
                         //bundle.putString(ContactsContract.Intents.Scan.RESULT, uriParsedResult.getURI());
                         break;
                     case TEXT:
                        // bundle.putString(ContactsContract.Intents.Scan.RESULT, rawResult.getText());
-                        String uuid=rawResult.getText().toString();
-                        String username=getIntent().getStringExtra("username");
+//                        String ur="http://118.89.160.240:8080/GraduateDesign/";
+//                        String front=rawResult.getText().toString().substring(0,ur.length());
+//                        String username=getIntent().getStringExtra("username");
+//                        String password=getIntent().getStringExtra("password");
+//                        Log.i("string length","front is "+front.length()+"back length is"+rawResult.getText().toString().substring(ur.length(),rawResult.getText().toString().length()));
+//                        if(ur.equals(front)){
+//                            String back=rawResult.getText().toString().substring(ur.length(),rawResult.getText().toString().length());
+//                            if(back.length()==10){
+//
+//                            }
+//                        }
+//                        String uuid=rawResult.getText().toString();
+
                         try {
                             URL url=new URL("http://118.89.160.240:8080/GraduateDesign/");
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
                         Toast.makeText(ScanActivity.this,rawResult.getText(),Toast.LENGTH_SHORT).show();
-                        intent=new Intent(ScanActivity.this,CertainActivity.class);
-                        startActivity(intent);
-                        finish();
+//                        intent=new Intent(ScanActivity.this,CertainActivity.class);
+//                        startActivity(intent);
+//                        finish();
                         break;
                 }
             }

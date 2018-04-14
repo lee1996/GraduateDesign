@@ -120,9 +120,11 @@ public class LoginActivity extends Activity {
                             SharedPreferences.Editor editor=sharedPreferences.edit();
                             editor.putBoolean("isLogin",true);
                             editor.putString("username",loginuser.getText().toString());
+                            editor.putString("password",loginpwd.getText().toString());
                             editor.commit();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("username",loginuser.getText().toString());
+//                            intent.putExtra("username",loginuser.getText().toString());
+//                            intent.putExtra("password",loginpwd.getText().toString());
                             startActivity(intent);
                             finish();
                         }else{

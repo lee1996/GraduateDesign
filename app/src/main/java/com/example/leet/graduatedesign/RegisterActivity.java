@@ -99,6 +99,7 @@ public class RegisterActivity extends Activity {
                                     }else{
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         intent.putExtra("username",registeruser.getText().toString());
+                                        intent.putExtra("password",registerpwd.getText().toString());
                                         startActivity(intent);
                                         finish();
                                     }

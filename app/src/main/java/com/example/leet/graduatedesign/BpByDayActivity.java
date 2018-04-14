@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -29,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.MyApplication;
-import Base.BaseActivity;
 import Entity.BloodPre;
 import Entity.BloodPreDao;
 import butterknife.BindView;
@@ -38,10 +35,10 @@ import cc.duduhuo.dialog.smartisan.NormalDialog;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
 
 /**
- * Created by leet on 18-4-10.
+ * Created by leet on 18-4-12.
  */
 
-public class BpChangeActivity extends Activity {
+public class BpByDayActivity extends Activity {
     private ImmersionBar mImmersionBar;
     @BindView(R.id.bptomain)
     ImageView bptomain;
@@ -55,7 +52,7 @@ public class BpChangeActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bpchange);
+        setContentView(R.layout.activity_bpbyday);
         ButterKnife.bind(this);
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
@@ -68,7 +65,7 @@ public class BpChangeActivity extends Activity {
         knowledge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final NormalDialog dialog = SmartisanDialog.createNormalDialog(BpChangeActivity.this);
+                final NormalDialog dialog = SmartisanDialog.createNormalDialog(BpByDayActivity.this);
                 dialog.setTitle("血压正常值")
                         .setMsg("我国健康青年人在安静状态下上压（收缩压）为100~120mmHg，下压（舒张压）为60~80mmHg，脉搏压为30~40mmHg")
                         .setMsgGravity(Gravity.CENTER)
@@ -91,7 +88,7 @@ public class BpChangeActivity extends Activity {
         final String username=getIntent().getStringExtra("username");
         List<BloodPre> list=bloodPreDao.queryBuilder().where(BloodPreDao.Properties.User.eq(username)).build().list();
         SimpleDateFormat sdf=new SimpleDateFormat("MM-dd");
-       // sdf.format(writeTime);
+        // sdf.format(writeTime);
         //Log.i("time"," "+sdf.format(writeTime));
         shuzhang.setBackgroundColor(Color.WHITE);
         shuzhang.setExtraTopOffset(-30f);
@@ -173,13 +170,13 @@ public class BpChangeActivity extends Activity {
         shousuo.getLegend().setEnabled(false);
 
         // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
-        final List<Data> shuzhangData = new ArrayList<>();
+        final List<BpByDayActivity.Data> shuzhangData = new ArrayList<>();
         for(int i=0;i<list.size();i++){
-            shuzhangData.add(new Data((float)i,Float.parseFloat(list.get(i).getShuzhang()),sdf.format(list.get(i).getTime())));
+            shuzhangData.add(new BpByDayActivity.Data((float)i,Float.parseFloat(list.get(i).getShuzhang()),sdf.format(list.get(i).getTime())));
         }
-        final List<Data> shousuoData=new ArrayList<>();
+        final List<BpByDayActivity.Data> shousuoData=new ArrayList<>();
         for(int i=0;i<list.size();i++){
-            shousuoData.add(new Data((float)i,Float.parseFloat(list.get(i).getShousuo()),sdf.format(list.get(i).getTime())));
+            shousuoData.add(new BpByDayActivity.Data((float)i,Float.parseFloat(list.get(i).getShousuo()),sdf.format(list.get(i).getTime())));
         }
 
         shuzhangXAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -200,7 +197,7 @@ public class BpChangeActivity extends Activity {
 
     }
 
-    private void setShuzhangData(List<Data> dataList) {
+    private void setShuzhangData(List<BpByDayActivity.Data> dataList) {
 
         ArrayList<BarEntry> values = new ArrayList<BarEntry>();
         List<Integer> colors = new ArrayList<Integer>();
@@ -210,7 +207,7 @@ public class BpChangeActivity extends Activity {
 
         for (int i = 0; i < dataList.size(); i++) {
 
-            Data d = dataList.get(i);
+            BpByDayActivity.Data d = dataList.get(i);
             BarEntry entry = new BarEntry(d.xValue, d.yValue);
             values.add(entry);
 
@@ -237,14 +234,14 @@ public class BpChangeActivity extends Activity {
             BarData data = new BarData(set);
             data.setValueTextSize(13f);
             //data.setValueTypeface(mTf);
-            data.setValueFormatter(new ValueFormatter());
+            data.setValueFormatter(new BpByDayActivity.ValueFormatter());
             data.setBarWidth(0.8f);
 
             shuzhang.setData(data);
             shuzhang.invalidate();
         }
     }
-    private void setShousuoData(List<Data> dataList) {
+    private void setShousuoData(List<BpByDayActivity.Data> dataList) {
 
         ArrayList<BarEntry> values = new ArrayList<BarEntry>();
         List<Integer> colors = new ArrayList<Integer>();
@@ -254,7 +251,7 @@ public class BpChangeActivity extends Activity {
 
         for (int i = 0; i < dataList.size(); i++) {
 
-            Data d = dataList.get(i);
+            BpByDayActivity.Data d = dataList.get(i);
             BarEntry entry = new BarEntry(d.xValue, d.yValue);
             values.add(entry);
 
@@ -281,7 +278,7 @@ public class BpChangeActivity extends Activity {
             BarData data = new BarData(set);
             data.setValueTextSize(13f);
             //data.setValueTypeface(mTf);
-            data.setValueFormatter(new ValueFormatter());
+            data.setValueFormatter(new BpByDayActivity.ValueFormatter());
             data.setBarWidth(0.8f);
 
             shousuo.setData(data);
@@ -323,4 +320,3 @@ public class BpChangeActivity extends Activity {
     }
 
 }
-

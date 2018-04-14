@@ -105,6 +105,7 @@ public class MainActivity extends Activity {
     private final BloodTypeDao bloodTypeDao=MyApplication.getInstances().getDaoSession().getBloodTypeDao();
     private final BloodPreDao bloodPreDao=MyApplication.getInstances().getDaoSession().getBloodPreDao();
     String username;
+    String password;
     private long firstTime = 0;
     private String lastheight;
     private String lastweight;
@@ -135,7 +136,10 @@ public class MainActivity extends Activity {
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
         ButterKnife.bind(this);
-        username=getIntent().getStringExtra("username").toString();
+//        username=getIntent().getStringExtra("username").toString();
+        SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
+        username=sharedPreferences.getString("username","username");
+        password=sharedPreferences.getString("password","password");
         user.setText(username);
         final WarningDialog dialog= SmartisanDialog.createWarningDialog(this);
         main.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +150,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
         person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +176,8 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,ScanActivity.class);
                 intent.putExtra("username",username);
+                //String password=getIntent().getStringExtra("password");
+                intent.putExtra("password",password);
                 startActivity(intent);
 //                Intent intent=new Intent(MainActivity.this,CertainActivity.class);
 //                startActivity(intent);
@@ -267,7 +274,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        username=getIntent().getStringExtra("username");
+        //username=getIntent().getStringExtra("username");
         init(username);
     }
 

@@ -32,7 +32,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ShowActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
-        <activity android:name=".BpChangeActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name=".BpByDayActivity" />
+        <activity android:name=".BpByWeekActivity" />
+        <activity android:name=".BpByMonthActivity" />
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

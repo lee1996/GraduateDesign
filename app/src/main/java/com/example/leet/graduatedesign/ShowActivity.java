@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +45,8 @@ import Entity.WeightDao;
 import MyView.RadarMarkerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.duduhuo.dialog.smartisan.SmartisanDialog;
+import cc.duduhuo.dialog.smartisan.ThreeOptionsDialog;
 
 /**
  * Created by leet on 18-3-29.
@@ -78,10 +81,47 @@ public class ShowActivity extends BaseActivity {
         other.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ShowActivity.this,BpChangeActivity.class);
-                String username=getIntent().getStringExtra("username");
-                intent.putExtra("username",username);
-                startActivity(intent);
+                final ThreeOptionsDialog dialog = SmartisanDialog.createThreeOptionsDialog(ShowActivity.this);
+                dialog.setTitle("请选择查看血压变化情况")
+                        .setOp1Text("按天查看")
+                        .setOp2Text("最近7次")
+                        .setOp3Text("最近30次")
+                        .show();
+                dialog.setOnSelectListener(new ThreeOptionsDialog.OnSelectListener() {
+                                               @Override
+                                               public void onOp1() {
+                                                  // Toast.makeText(ShowActivity.this, "按天查看", Toast.LENGTH_SHORT).show();
+                                                   Intent intent=new Intent(ShowActivity.this,BpByDayActivity.class);
+                                                   String username=getIntent().getStringExtra("username");
+                                                   intent.putExtra("username",username);
+                                                   startActivity(intent);
+                                                   dialog.dismiss();
+                                               }
+
+                                               @Override
+                                               public void onOp2() {
+                                                   //Toast.makeText(ShowActivity.this, "按周查看", Toast.LENGTH_SHORT).show();
+                                                   Intent intent=new Intent(ShowActivity.this,BpByWeekActivity.class);
+                                                   String username=getIntent().getStringExtra("username");
+                                                   Log.i("username in bpbyweek","  "+username);
+                                                   intent.putExtra("username",username);
+                                                   startActivity(intent);
+                                                   dialog.dismiss();
+                                               }
+
+                                               @Override
+                                               public void onOp3() {
+                                                   //Toast.makeText(ShowActivity.this, "按月查看", Toast.LENGTH_SHORT).show();
+                                                   Intent intent=new Intent(ShowActivity.this,BpByMonthActivity.class);
+                                                   String username=getIntent().getStringExtra("username");
+                                                   intent.putExtra("username",username);
+                                                   startActivity(intent);dialog.dismiss();
+                                               }
+                                           });
+//                Intent intent=new Intent(ShowActivity.this,BpChangeActivity.class);
+//                String username=getIntent().getStringExtra("username");
+//                intent.putExtra("username",username);
+//                startActivity(intent);
             }
         });
         mChart.setBackgroundColor(Color.rgb(60, 65, 82));
