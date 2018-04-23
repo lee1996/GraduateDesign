@@ -3,29 +3,30 @@ package Entity;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Property;
 
 /**
- * Created by leet on 18-3-16.
+ * Created by leet on 18-4-18.
  */
 @Entity
-public class User {
+public class Gender {
     @Id(autoincrement = true)
     private Long _id;
     private String username;
-    private String password;
-    public User(String username,String password){
+    private String gender;
+
+    public Gender(String username, String gender) {
         this.username = username;
-        this.password = password;
+        this.gender = gender;
     }
-    @Generated(hash = 1421064565)
-    public User(Long _id, String username, String password) {
+
+    @Generated(hash = 1106921146)
+    public Gender(Long _id, String username, String gender) {
         this._id = _id;
         this.username = username;
-        this.password = password;
+        this.gender = gender;
     }
-    @Generated(hash = 586692638)
-    public User() {
+    @Generated(hash = 2034361717)
+    public Gender() {
     }
     public Long get_id() {
         return this._id;
@@ -39,13 +40,11 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getPassword() {
-        return this.password;
+    public String getGender() {
+        return this.gender;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
-
     
-
 }

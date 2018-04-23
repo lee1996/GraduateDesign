@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.leet.graduatedesign.BaseInfoActivity;
 import com.example.leet.graduatedesign.MainActivity;
 import com.example.leet.graduatedesign.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -103,7 +104,7 @@ public class HeightUpdateActivity extends BaseActivity {
                         Log.i("height response","  "+result);
                     }
                 }).start();
-                Intent intent=new Intent(HeightUpdateActivity.this, MainActivity.class);
+                Intent intent=new Intent(HeightUpdateActivity.this, BaseInfoActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
                 finish();

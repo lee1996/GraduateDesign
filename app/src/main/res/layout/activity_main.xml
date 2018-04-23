@@ -83,6 +83,7 @@
       </LinearLayout>
          <com.leon.lib.settingview.LSettingItem
              android:id="@+id/height"
+             android:visibility="gone"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:background="#fff"
@@ -93,6 +94,7 @@
           />
       <com.leon.lib.settingview.LSettingItem
           android:id="@+id/weight"
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#fff"
@@ -102,6 +104,7 @@
           />
       <com.leon.lib.settingview.LSettingItem
           android:id="@+id/leftEye"
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#fff"
@@ -111,6 +114,7 @@
           />
       <com.leon.lib.settingview.LSettingItem
           android:id="@+id/rightEye"
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#fff"
@@ -120,6 +124,7 @@
           />
       <com.leon.lib.settingview.LSettingItem
           android:id="@+id/bloodType"
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#fff"
@@ -128,13 +133,22 @@
           leon:rightText="A"
           />
       <com.leon.lib.settingview.LSettingItem
+          android:id="@+id/baseinfo"
+          android:layout_marginTop="20dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="#fff"
+          leon:leftText="个人基本信息"
+          leon:isShowRightText="false"
+          />
+      <com.leon.lib.settingview.LSettingItem
           android:id="@+id/bloodPressure"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#fff"
           leon:leftText="血压"
           leon:isShowRightText="true"
-          leon:rightText="150/55"
+          leon:rightText="150/55mmHg"
           />
       <com.leon.lib.settingview.LSettingItem
           android:id="@+id/detail_picture"

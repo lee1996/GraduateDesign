@@ -1,6 +1,5 @@
 package com.example.leet.graduatedesign;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,23 +7,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.leon.lib.settingview.LSettingItem;
-
-import com.melnykov.fab.FloatingActionButton;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,27 +25,29 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import Adapter.MyAdapter;
 import Application.MyApplication;
 import Base.BaseActivity;
+import Entity.Age;
+import Entity.AgeDao;
 import Entity.BloodPre;
 import Entity.BloodPreDao;
 import Entity.BloodType;
 import Entity.BloodTypeDao;
+import Entity.Gender;
+import Entity.GenderDao;
 import Entity.Height;
 import Entity.HeightDao;
 import Entity.LeftEye;
 import Entity.LeftEyeDao;
 import Entity.RightEye;
 import Entity.RightEyeDao;
+import Entity.User;
 import Entity.UserDao;
 import Entity.Weight;
 import Entity.WeightDao;
-import Update.BloodPreUpdateActivity;
+import Update.AgeUpdateActivity;
 import Update.BloodTypeUpdateActivity;
 import Update.HeightUpdateActivity;
 import Update.LeftEyeUpdateActivity;
@@ -62,25 +55,22 @@ import Update.RightEyeUpdateActivity;
 import Update.WeightUpdateActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.duduhuo.dialog.smartisan.OptionListDialog;
 import cc.duduhuo.dialog.smartisan.SmartisanDialog;
+import cc.duduhuo.dialog.smartisan.TwoOptionsDialog;
 import cc.duduhuo.dialog.smartisan.WarningDialog;
-
-
-import static cc.duduhuo.dialog.smartisan.SmartisanDialog.createWarningDialog;
+import cc.duduhuo.dialog.smartisan.listener.OnOptionItemSelectListener;
 
 /**
- * Created by leet on 17-11-28.
+ * Created by leet on 18-4-18.
  */
 
-public class MainActivity extends Activity {
-    @BindView(R.id.main)
-    LinearLayout main;
-    @BindView(R.id.user)
-    TextView user;
-    @BindView(R.id.person)
-    ImageView person;
-    @BindView(R.id.scan)
-    ImageView scan;
+public class BaseInfoActivity extends BaseActivity {
+
+    @BindView(R.id.gender)
+    LSettingItem gender;
+    @BindView(R.id.age)
+    LSettingItem age;
     @BindView(R.id.height)
     LSettingItem height;
     @BindView(R.id.weight)
@@ -91,15 +81,14 @@ public class MainActivity extends Activity {
     LSettingItem rightEye;
     @BindView(R.id.bloodType)
     LSettingItem bloodType;
-    @BindView(R.id.detail_picture)
-    LSettingItem detail_picture;
-    @BindView(R.id.bloodPressure)
-    LSettingItem bloodPressure;
-    @BindView(R.id.baseinfo)
-    LSettingItem baseinfo;
+    @BindView(R.id.basetomain)
+    ImageView basetomain;
 
     private ImmersionBar mImmersionBar;
-    private final UserDao userDao=MyApplication.getInstances().getDaoSession().getUserDao();
+
+    private final UserDao userDao= MyApplication.getInstances().getDaoSession().getUserDao();
+    private final GenderDao genderDao=MyApplication.getInstances().getDaoSession().getGenderDao();
+    private final AgeDao ageDao=MyApplication.getInstances().getDaoSession().getAgeDao();
     private final HeightDao heightDao=MyApplication.getInstances().getDaoSession().getHeightDao();
     private final WeightDao weightDao=MyApplication.getInstances().getDaoSession().getWeightDao();
     private final LeftEyeDao leftEyeDao=MyApplication.getInstances().getDaoSession().getLeftEyeDao();
@@ -126,7 +115,7 @@ public class MainActivity extends Activity {
                 leftEye.setRightText(lastleft);
                 rightEye.setRightText(lastright);
                 bloodType.setRightText(lastbt);
-                bloodPressure.setRightText(lastbp);
+
             }
             super.handleMessage(msg);
         }
@@ -134,77 +123,89 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_baseinfo);
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.init();
         ButterKnife.bind(this);
-//        username=getIntent().getStringExtra("username").toString();
         SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
         username=sharedPreferences.getString("username","username");
         password=sharedPreferences.getString("password","password");
-        user.setText(username);
-        final WarningDialog dialog= SmartisanDialog.createWarningDialog(this);
-        main.setOnClickListener(new View.OnClickListener() {
+        final TwoOptionsDialog dialog = SmartisanDialog.createTwoOptionsDialog(this);
+        basetomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,ShowActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
+                finish();
             }
         });
-
-        person.setOnClickListener(new View.OnClickListener() {
+        gender.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
             @Override
-            public void onClick(View view) {
-                dialog.setTitle("确定退出登录吗？").setConfirmText("退出登录").show();
-                dialog.setOnConfirmListener(new WarningDialog.OnConfirmListener() {
+            public void click(boolean isChecked) {
+                dialog.setTitle("请选择您的性别")
+                        .setOp1Text("男")
+                        .setOp2Text("女")
+                        .show();
+                dialog.setOnSelectListener(new TwoOptionsDialog.OnSelectListener() {
                     @Override
-                    public void onConfirm() {
-                        Toast.makeText(MainActivity.this, "退出登录", Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=sharedPreferences.edit();
-                        editor.putBoolean("isLogin",false);
-                        editor.commit();
-                        new Thread(new Runnable() {
+                    public void onOp1() {
+                        Gender gender1=new Gender(username,"男");
+                        genderDao.insert(gender1);
+                        gender.setRightText("男");
+                        new Thread(new Runnable(){
                             @Override
                             public void run() {
+                                URL url1= null;
                                 try {
-                                    URL url=new URL("http://118.89.160.240:8080/GraduateDesign/safelogin.action?username="+username
-                                            +"&flag=-1&type=update");
-                                    downloadUrl(url);
+                                    url1 = new URL("http://118.89.160.240:8080/GraduateDesign/gender.action?username="+username+"&gender="+"男");
                                 } catch (MalformedURLException e) {
                                     e.printStackTrace();
+                                }
+                                String result= null;
+                                try {
+                                    result = downloadUrl(url1);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                                Log.i("age response","  "+result);
                             }
                         }).start();
-                        Log.i("login status","  "+sharedPreferences.getBoolean("isLogin",false));
-                        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onOp2() {
+                        Gender gender1=new Gender(username,"女");
+                        genderDao.insert(gender1);
+                        gender.setRightText("女");
+                        new Thread(new Runnable(){
+                            @Override
+                            public void run() {
+                                URL url1= null;
+                                try {
+                                    url1 = new URL("http://118.89.160.240:8080/GraduateDesign/gender.action?username="+username+"&gender="+"女");
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                                String result= null;
+                                try {
+                                    result = downloadUrl(url1);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.i("age response","  "+result);
+                            }
+                        }).start();
+                        dialog.dismiss();
                     }
                 });
             }
         });
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,ScanActivity.class);
-                intent.putExtra("username",username);
-                //String password=getIntent().getStringExtra("password");
-                intent.putExtra("password",password);
-                startActivity(intent);
-//                Intent intent=new Intent(MainActivity.this,CertainActivity.class);
-//                startActivity(intent);
-            }
-        });
-
-        baseinfo.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
+        age.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
             @Override
             public void click(boolean isChecked) {
-                Intent intent=new Intent(MainActivity.this,BaseInfoActivity.class);
+                Intent intent=new Intent(getApplicationContext(), AgeUpdateActivity.class);
+                intent.putExtra("username",username);
                 startActivity(intent);
+                finish();
             }
         });
         height.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
@@ -213,6 +214,7 @@ public class MainActivity extends Activity {
                 Intent intent=new Intent(getApplicationContext(), HeightUpdateActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
+                finish();
             }
         });
         weight.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
@@ -221,6 +223,7 @@ public class MainActivity extends Activity {
                 Intent intent=new Intent(getApplicationContext(), WeightUpdateActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
+                finish();
             }
         });
         leftEye.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
@@ -229,6 +232,7 @@ public class MainActivity extends Activity {
                 Intent intent=new Intent(getApplicationContext(), LeftEyeUpdateActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
+                finish();
             }
         });
         rightEye.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
@@ -237,36 +241,64 @@ public class MainActivity extends Activity {
                 Intent intent=new Intent(getApplicationContext(), RightEyeUpdateActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
+                finish();
             }
         });
+
         bloodType.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
             @Override
             public void click(boolean isChecked) {
-                Intent intent=new Intent(getApplicationContext(), BloodTypeUpdateActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-            }
-        });
-        bloodPressure.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
-            @Override
-            public void click(boolean isChecked) {
-                Intent intent=new Intent(getApplicationContext(), BloodPreUpdateActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-            }
-        });
-        detail_picture.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
-            @Override
-            public void click(boolean isChecked) {
-                Intent intent=new Intent(getApplicationContext(),PictureActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
+//                Intent intent=new Intent(getApplicationContext(), BloodTypeUpdateActivity.class);
+//                intent.putExtra("username",username);
+//                startActivity(intent);
+//                finish();
+                List<String> list=new ArrayList<>();
+                list.add("A");
+                list.add("B");
+                list.add("AB");
+                list.add("O");
+                list.add("Rh");
+                final OptionListDialog dialog1 = SmartisanDialog.createOptionListDialog(BaseInfoActivity.this);
+                dialog1.setTitle("请选择您的血型")
+                        .setOptionList(list)
+                        .setItemGravity(Gravity.CENTER) // Item是居左、居中还是居右
+                        .setLastColor(0xFF40B64A)   // 上次选择的选项显示的颜色，用于区分
+                        .show();
+                dialog1.setOnOptionItemSelectListener(new OnOptionItemSelectListener() {
+                    @Override
+                    public void onSelect(final int position, final CharSequence option) {
+
+                        //Toast.makeText(BaseInfoActivity.this, "position = " + position + ", option = " + option, Toast.LENGTH_SHORT).show();
+                        new Thread(new Runnable(){
+                            @Override
+                            public void run() {
+                                URL url1= null;
+                                try {
+                                    url1 = new URL("http://118.89.160.240:8080/GraduateDesign/bloodtype.action?username="+username+"&bt="+option);
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                                String result= null;
+                                try {
+                                    result = downloadUrl(url1);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.i("bloodtype response","  "+result);
+                            }
+                        }).start();
+                        bloodType.setRightText(option.toString());
+                        dialog1.dismiss();
+                    }
+                });
             }
         });
         init(username);
-
     }
+
     public void init(String username){
+        List<Gender> listGender=genderDao.queryBuilder().where(GenderDao.Properties.Username.eq(username)).build().list();
+        List<Age> listAge=ageDao.queryBuilder().where(AgeDao.Properties.Username.eq(username)).build().list();
         List<Height> listHeight=heightDao.queryBuilder().where(HeightDao.Properties.User.eq(username)).build().list();
         List<Weight> listWeight=weightDao.queryBuilder().where(WeightDao.Properties.User.eq(username)).build().list();
         List<LeftEye> listLeftEye=leftEyeDao.queryBuilder().where(LeftEyeDao.Properties.User.eq(username)).build().list();
@@ -274,6 +306,12 @@ public class MainActivity extends Activity {
         List<BloodType> listBloodType=bloodTypeDao.queryBuilder().where(BloodTypeDao.Properties.User.eq(username)).build().list();
         List<BloodPre> listBloodPre=bloodPreDao.queryBuilder().where(BloodPreDao.Properties.User.eq(username)).build().list();
         //Log.i("height "," "+listHeight);
+        if(listGender.size()!=0){
+            gender.setRightText(listGender.get(listGender.size()-1).getGender());
+        }
+        if(listAge.size()!=0){
+            age.setRightText(String.valueOf(listAge.get(listAge.size()-1).getAge()));
+        }
         if(listHeight.size()!=0) {
             height.setRightText(listHeight.get(listHeight.size() - 1).getHeight()+"cm");
         }
@@ -289,9 +327,7 @@ public class MainActivity extends Activity {
         if(listBloodType.size()!=0){
             bloodType.setRightText(listBloodType.get(listBloodType.size()-1).getBloodtype());
         }
-        if(listBloodPre.size()!=0){
-            bloodPressure.setRightText(listBloodPre.get(listBloodPre.size()-1).getShousuo()+"/"+listBloodPre.get(listBloodPre.size()-1).getShuzhang()+"mmHg");
-        }
+
     }
 
     @Override
@@ -307,55 +343,8 @@ public class MainActivity extends Activity {
         if (mImmersionBar != null)
             mImmersionBar.destroy();
     }
-    /*
-    @Override
-    protected void onStart() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String result=null;
-                try {
-                    URL url=new URL("http://118.89.160.240:8080/GraduateDesign/getlast.action?username="+username);
-                    result=downloadUrl(url);
-                    JSONObject jsonObject=new JSONObject(result);
-                    lastheight=jsonObject.getString("height")+"cm";
-                    lastweight=jsonObject.getString("weight")+"kg";
-                    lastleft=jsonObject.getString("lefteye");
-                    lastright=jsonObject.getString("righteye");
-                    lastbt=jsonObject.getString("bloodtype");
-                    lastshousuo=jsonObject.getString("shousuo");
-                    lastshuzhang=jsonObject.getString("shuzhang");
-                    lastbp=lastshousuo+"/"+lastshuzhang;
-                    Message msg=handler.obtainMessage();
-                    msg.what=1;
-                    msg.sendToTarget();
 
-                    //Log.i("all parameters","height is "+height+",weight is"+weight+",left is"+left );
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-        super.onStart();
-    }
-*/
-    @Override
-    public void onBackPressed() {
-        long secondTime = System.currentTimeMillis();
-        if (secondTime - firstTime > 2000) {
-            Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            firstTime = secondTime;
-        } else {
-            System.exit(0);
-        }
-    }
-
-    private String downloadUrl(URL url) throws IOException {
+    private  String downloadUrl(URL url) throws IOException {
         InputStream stream = null;
         HttpURLConnection connection = null;
         String result = null;
@@ -394,14 +383,7 @@ public class MainActivity extends Activity {
             isr.close();
             stream.close();
             result = builder.toString();
-            Log.v("result in main is",result);
-                /*
-                if (stream != null) {
-                    // Converts Stream to String with max length of 500.
-                    result = readStream(stream,);
-                }
-                */
-
+            Log.v("result in Fragment is",result);
         } finally {
             // Close Stream and disconnect HTTPS connection.
             if (stream != null) {
@@ -413,5 +395,4 @@ public class MainActivity extends Activity {
         }
         return result;
     }
-
 }

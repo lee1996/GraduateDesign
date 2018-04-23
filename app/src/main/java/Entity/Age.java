@@ -3,29 +3,33 @@ package Entity;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Property;
 
 /**
- * Created by leet on 18-3-16.
+ * Created by leet on 18-4-18.
  */
 @Entity
-public class User {
+public class Age {
     @Id(autoincrement = true)
     private Long _id;
     private String username;
-    private String password;
-    public User(String username,String password){
+    private int age;
+    private Long time;
+    public Age( int age,String username,Long time) {
         this.username = username;
-        this.password = password;
+        this.age = age;
+        this.time=time;
     }
-    @Generated(hash = 1421064565)
-    public User(Long _id, String username, String password) {
+
+    @Generated(hash = 42078602)
+    public Age(Long _id, String username, int age, Long time) {
         this._id = _id;
         this.username = username;
-        this.password = password;
+        this.age = age;
+        this.time = time;
     }
-    @Generated(hash = 586692638)
-    public User() {
+
+    @Generated(hash = 2018356803)
+    public Age() {
     }
     public Long get_id() {
         return this._id;
@@ -39,13 +43,19 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getPassword() {
-        return this.password;
+    public int getAge() {
+        return this.age;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAge(int age) {
+        this.age = age;
     }
 
+    public Long getTime() {
+        return this.time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
     
-
 }

@@ -92,7 +92,10 @@ public class BpByMonthActivity extends Activity {
         final BloodPreDao bPreDao= MyApplication.getInstances().getDaoSession().getBloodPreDao();
         String name=getIntent().getStringExtra("username");
         List<BloodPre> lis=bPreDao.queryBuilder().where(BloodPreDao.Properties.User.eq(name)).build().list();
-        if(lis.size()<30){
+        if(lis.size()==0){
+            Toast.makeText(BpByMonthActivity.this,"暂无数据",Toast.LENGTH_SHORT).show();
+
+        }else if(lis.size()<30){
             datacount=lis.size();
             try {
                 setupChart(mCharts[0], getShuzhangData(), mColors[0]);

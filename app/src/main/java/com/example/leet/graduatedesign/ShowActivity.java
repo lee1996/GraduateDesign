@@ -115,7 +115,8 @@ public class ShowActivity extends BaseActivity {
                                                    Intent intent=new Intent(ShowActivity.this,BpByMonthActivity.class);
                                                    String username=getIntent().getStringExtra("username");
                                                    intent.putExtra("username",username);
-                                                   startActivity(intent);dialog.dismiss();
+                                                   startActivity(intent);
+                                                   dialog.dismiss();
                                                }
                                            });
 //                Intent intent=new Intent(ShowActivity.this,BpChangeActivity.class);

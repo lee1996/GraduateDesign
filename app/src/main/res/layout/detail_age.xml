@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#8B795E"
+        android:orientation="horizontal">
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="0dp">-->
+
+        <ImageView
+            android:id="@+id/agetomain"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:paddingRight="53dp"
+            android:layout_marginTop="37dp"
+            android:layout_weight="1"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_marginTop="13dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="年龄"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+        <!--android:layout_centerVertical="true" android:layout_marginTop="45dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <ImageView
+            android:id="@+id/save_age"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:paddingLeft="50dp"
+            android:layout_marginTop="37dp"
+            android:layout_weight="1"
+            android:src="@drawable/save" />
+    </LinearLayout>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/update_age"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="80dp"
+        android:hint="年龄"
+        android:layout_width="match_parent"
+        android:inputType="number"
+        app:met_clearButton="true"
+        app:met_baseColor="#848484"
+        app:met_primaryColor="#212121"
+        app:met_errorColor="#f00"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelText="血型"
+        app:met_singleLineEllipsis="true"
+        app:met_floatingLabelTextColor="#000"
+        app:met_minCharacters="0"
+        app:met_maxCharacters="8"
+        />
+
+</LinearLayout>

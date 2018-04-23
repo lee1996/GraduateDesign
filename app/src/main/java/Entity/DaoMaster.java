@@ -28,6 +28,8 @@ public class DaoMaster extends AbstractDaoMaster {
         RightEyeDao.createTable(db, ifNotExists);
         BloodTypeDao.createTable(db, ifNotExists);
         BloodPreDao.createTable(db, ifNotExists);
+        GenderDao.createTable(db, ifNotExists);
+        AgeDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -39,6 +41,8 @@ public class DaoMaster extends AbstractDaoMaster {
         RightEyeDao.dropTable(db, ifExists);
         BloodTypeDao.dropTable(db, ifExists);
         BloodPreDao.dropTable(db, ifExists);
+        GenderDao.dropTable(db, ifExists);
+        AgeDao.dropTable(db, ifExists);
     }
 
     /**
@@ -64,6 +68,8 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(RightEyeDao.class);
         registerDaoClass(BloodTypeDao.class);
         registerDaoClass(BloodPreDao.class);
+        registerDaoClass(GenderDao.class);
+        registerDaoClass(AgeDao.class);
     }
 
     public DaoSession newSession() {

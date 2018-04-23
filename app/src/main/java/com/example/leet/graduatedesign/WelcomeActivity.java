@@ -68,8 +68,8 @@ public class WelcomeActivity extends Activity {
                 finish();
             }
         });
-        UserDao userDao= MyApplication.getInstances().getDaoSession().getUserDao();
-        List<User> list=userDao.loadAll();
+        //UserDao userDao= MyApplication.getInstances().getDaoSession().getUserDao();
+        //List<User> list=userDao.loadAll();
     }
 
     @Override

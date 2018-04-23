@@ -23,6 +23,7 @@
         <activity android:name="Update.RightEyeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name="Update.BloodTypeUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name="Update.BloodPreUpdateActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+        <activity android:name="Update.AgeUpdateActivity"  android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name=".PictureActivity"  android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
         <activity android:name=".WelcomeActivity"  android:theme="@style/JK.SwipeBack.Transparent.Theme">
             <intent-filter>
@@ -35,6 +36,8 @@
         <activity android:name=".BpByDayActivity" />
         <activity android:name=".BpByWeekActivity" />
         <activity android:name=".BpByMonthActivity" />
+        <activity android:name=".BaseInfoActivity" android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

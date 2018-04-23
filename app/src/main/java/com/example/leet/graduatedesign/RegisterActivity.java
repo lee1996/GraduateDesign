@@ -82,15 +82,19 @@ public class RegisterActivity extends Activity {
                                 public void run() {
                                     Looper.prepare();
                                     URL url1= null;
+                                    URL url2=null;
                                     try {
                                         url1 = new URL("http://118.89.160.240:8080/GraduateDesign/register.action?username="+registeruser.getText().toString()
                                                 +"&password="+registerpwd.getText().toString());
+                                        url2=new URL("http://118.89.160.240:8080/GraduateDesign/safelogin.action?username="+registeruser.getText().toString()
+                                                +"&flag=1&type=insert");
                                     } catch (MalformedURLException e) {
                                         e.printStackTrace();
                                     }
                                     String result=null;
                                     try {
                                         result = downloadUrl(url1);
+                                        downloadUrl(url2);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }

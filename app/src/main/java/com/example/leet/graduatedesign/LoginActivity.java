@@ -88,19 +88,23 @@ public class LoginActivity extends Activity {
                         Looper.prepare();
                         URL url1=null;
                         URL url2=null;
+                        URL url3=null;
                         try {
                             url1 = new URL("http://118.89.160.240:8080/GraduateDesign/login.action?username="+loginuser.getText().toString()
                                     +"&password="+loginpwd.getText().toString());
                             url2=new URL("http://118.89.160.240:8080/GraduateDesign/getlast.action?username="+loginuser.getText().toString());
-
+                            url3=new URL("http://118.89.160.240:8080/GraduateDesign/safelogin.action?username="+loginuser.getText().toString()
+                                    +"&flag=4&type=get");
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
                         String result= null;
                         String result2=null;
+                        String result3=null;
                         try {
                             result = downloadUrl(url1);
                             result2=downloadUrl(url2);
+                            result3=downloadUrl(url3);
                             JSONObject jsonObject=new JSONObject(result2);
                             lastheight=jsonObject.getString("height");
                             lastweight=jsonObject.getString("weight");
@@ -115,20 +119,54 @@ public class LoginActivity extends Activity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if(result.equals("1")){
-                            SharedPreferences sharedPreferences=LoginActivity.this.getSharedPreferences("data",MODE_PRIVATE);
-                            SharedPreferences.Editor editor=sharedPreferences.edit();
-                            editor.putBoolean("isLogin",true);
-                            editor.putString("username",loginuser.getText().toString());
-                            editor.putString("password",loginpwd.getText().toString());
-                            editor.commit();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                            intent.putExtra("username",loginuser.getText().toString());
-//                            intent.putExtra("password",loginpwd.getText().toString());
-                            startActivity(intent);
-                            finish();
-                        }else{
-                            Toast.makeText(LoginActivity.this,"账号或者密码错误！",Toast.LENGTH_SHORT).show();
+                        if(result3.equals("1")){
+                            Toast.makeText(LoginActivity.this,"账号已在其他设备登录",Toast.LENGTH_SHORT).show();
+                        }else {
+                            if (result.equals("1")) {
+                                SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("data", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("isLogin", true);
+                                editor.putString("username", loginuser.getText().toString());
+                                editor.putString("password", loginpwd.getText().toString());
+                                editor.commit();
+                                if(result3.equals("-1")){
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                URL url4=new URL("http://118.89.160.240:8080/GraduateDesign/safelogin.action?username="+loginuser.getText().toString()
+                                                        +"&flag=1&type=update");
+                                                downloadUrl(url4);
+                                            } catch (MalformedURLException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }).start();
+                                }else{
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                URL url4=new URL("http://118.89.160.240:8080/GraduateDesign/safelogin.action?username="+loginuser.getText().toString()
+                                                        +"&flag=1&type=insert");
+                                                downloadUrl(url4);
+
+                                            } catch (MalformedURLException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }).start();
+                                }
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "账号或者密码错误！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         Log.i("login response","  "+result);
                         Looper.loop();

@@ -2,7 +2,6 @@ package Update;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.example.leet.graduatedesign.BaseInfoActivity;
-import com.example.leet.graduatedesign.MainActivity;
 import com.example.leet.graduatedesign.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -26,50 +24,49 @@ import java.util.List;
 
 import Application.MyApplication;
 import Base.BaseActivity;
+import Entity.Age;
+import Entity.AgeDao;
 import Entity.BloodType;
 import Entity.BloodTypeDao;
-import Entity.Height;
-import Entity.HeightDao;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by leet on 18-1-24.
+ * Created by leet on 18-4-18.
  */
 
-public class BloodTypeUpdateActivity extends BaseActivity {
-    @BindView(R.id.btypetomain)
-    ImageView btypetomain;
-    @BindView(R.id.save_btype)
-    ImageView save_btype;
-    @BindView(R.id.update_btype)
-    MaterialEditText update_btype;
+public class AgeUpdateActivity extends BaseActivity {
+    @BindView(R.id.agetomain)
+    ImageView agetomain;
+    @BindView(R.id.save_age)
+    ImageView save_age;
+    @BindView(R.id.update_age)
+    MaterialEditText update_age;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_bloodtype);
+        setContentView(R.layout.detail_age);
         ButterKnife.bind(this);
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        final BloodTypeDao bloodTypeDao= MyApplication.getInstances().getDaoSession().getBloodTypeDao();
+        final AgeDao ageDao= MyApplication.getInstances().getDaoSession().getAgeDao();
         final String username=getIntent().getStringExtra("username");
-        List<BloodType> list=bloodTypeDao.queryBuilder().where(BloodTypeDao.Properties.User.eq(username)).build().list();
+        List<Age> list=ageDao.queryBuilder().where(AgeDao.Properties.Username.eq(username)).build().list();
         if(list.size()!=0){
-            update_btype.setText(list.get(list.size()-1).getBloodtype());
+            update_age.setText(list.get(list.size()-1).getAge());
         }
-        btypetomain.setOnClickListener(new View.OnClickListener() {
+        agetomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 finish();
             }
         });
-        save_btype.setOnClickListener(new View.OnClickListener() {
+        save_age.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 java.util.Date writeTime=new java.util.Date();
                 Log.i("time"," "+writeTime);
-                BloodType bloodType=new BloodType(update_btype.getText().toString(),getIntent().getStringExtra("username"),writeTime.getTime());
-                bloodTypeDao.insert(bloodType);
+                Age ageIns=new Age(Integer.parseInt(update_age.getText().toString()),getIntent().getStringExtra("username"),writeTime.getTime());
+                ageDao.insert(ageIns);
                 //Toast.makeText(getApplicationContext(),update_height.getText().toString(),Toast.LENGTH_SHORT).show();
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 new Thread(new Runnable(){
@@ -77,7 +74,7 @@ public class BloodTypeUpdateActivity extends BaseActivity {
                     public void run() {
                         URL url1= null;
                         try {
-                            url1 = new URL("http://118.89.160.240:8080/GraduateDesign/bloodtype.action?username="+username+"&bt="+update_btype.getText().toString());
+                            url1 = new URL("http://118.89.160.240:8080/GraduateDesign/age.action?username="+username+"&age="+update_age.getText().toString());
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
@@ -87,11 +84,10 @@ public class BloodTypeUpdateActivity extends BaseActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Log.i("bloodtype response","  "+result);
+                        Log.i("age response","  "+result);
                     }
                 }).start();
-
-                Intent intent=new Intent(BloodTypeUpdateActivity.this, BaseInfoActivity.class);
+                Intent intent=new Intent(AgeUpdateActivity.this, BaseInfoActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
                 finish();

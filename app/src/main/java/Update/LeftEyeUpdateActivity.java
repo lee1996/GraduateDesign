@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
+import com.example.leet.graduatedesign.BaseInfoActivity;
 import com.example.leet.graduatedesign.MainActivity;
 import com.example.leet.graduatedesign.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -89,7 +90,7 @@ public class LeftEyeUpdateActivity extends BaseActivity {
                         Log.i("lefteye response","  "+result);
                     }
                 }).start();
-                Intent intent=new Intent(LeftEyeUpdateActivity.this, MainActivity.class);
+                Intent intent=new Intent(LeftEyeUpdateActivity.this, BaseInfoActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
                 finish();
