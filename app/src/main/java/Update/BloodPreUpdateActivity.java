@@ -70,38 +70,42 @@ public class BloodPreUpdateActivity extends BaseActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                java.util.Date writeTime=new java.util.Date();
-                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                sdf.format(writeTime.getTime());
-                Log.i("time"," "+sdf.format(writeTime.getTime()));
-                BloodPre bloodPre=new BloodPre(update_shousuo.getText().toString(),update_shuzhang.getText().toString(),getIntent().getStringExtra("username"),writeTime.getTime());
-                bloodPreDao.insert(bloodPre);
-                //Toast.makeText(getApplicationContext(),update_height.getText().toString(),Toast.LENGTH_SHORT).show();
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                new Thread(new Runnable(){
-                    @Override
-                    public void run() {
-                        URL url1= null;
-                        try {
-                            url1 = new URL("http://118.89.160.240:8080/GraduateDesign/bloodpre.action?username="+username+"&shuzhang="+update_shuzhang.getText().toString()
-                            +"&shousuo="+update_shousuo.getText().toString());
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
+                if(update_shousuo.getText().toString().length()==0||update_shuzhang.getText().toString().length()==0){
+                    Toast.makeText(BloodPreUpdateActivity.this,"请输入正确的血压值！",Toast.LENGTH_SHORT).show();
+                }else {
+                    java.util.Date writeTime = new java.util.Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    sdf.format(writeTime.getTime());
+                    Log.i("time", " " + sdf.format(writeTime.getTime()));
+                    BloodPre bloodPre = new BloodPre(update_shousuo.getText().toString(), update_shuzhang.getText().toString(), getIntent().getStringExtra("username"), writeTime.getTime());
+                    bloodPreDao.insert(bloodPre);
+                    //Toast.makeText(getApplicationContext(),update_height.getText().toString(),Toast.LENGTH_SHORT).show();
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            URL url1 = null;
+                            try {
+                                url1 = new URL("http://118.89.160.240:8080/GraduateDesign/bloodpre.action?username=" + username + "&shuzhang=" + update_shuzhang.getText().toString()
+                                        + "&shousuo=" + update_shousuo.getText().toString());
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                            String result = null;
+                            try {
+                                result = downloadUrl(url1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Log.i("bloodpre response", "  " + result);
                         }
-                        String result= null;
-                        try {
-                            result = downloadUrl(url1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Log.i("bloodpre response","  "+result);
-                    }
-                }).start();
+                    }).start();
 
-                Intent intent=new Intent(BloodPreUpdateActivity.this, MainActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(BloodPreUpdateActivity.this, MainActivity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 

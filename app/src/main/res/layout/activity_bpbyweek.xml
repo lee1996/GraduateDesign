@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:layout_weight="1.5"
             android:gravity="center"
-            android:text="最近一周血压变化"
+            android:text="最近7次血压变化"
             android:textColor="#fff"
             android:textSize="16sp" />
         <!--android:layout_centerVertical="true" android:layout_marginTop="45dp"-->

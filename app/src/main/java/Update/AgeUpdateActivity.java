@@ -52,7 +52,7 @@ public class AgeUpdateActivity extends BaseActivity {
         final String username=getIntent().getStringExtra("username");
         List<Age> list=ageDao.queryBuilder().where(AgeDao.Properties.Username.eq(username)).build().list();
         if(list.size()!=0){
-            update_age.setText(list.get(list.size()-1).getAge());
+            update_age.setText(String.valueOf(list.get(list.size()-1).getAge()));
         }
         agetomain.setOnClickListener(new View.OnClickListener() {
             @Override

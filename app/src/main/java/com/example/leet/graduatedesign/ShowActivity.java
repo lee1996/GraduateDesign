@@ -322,8 +322,11 @@ public class ShowActivity extends BaseActivity {
             entries1.add(new RadarEntry(rightResult));
             entries2.add(new RadarEntry(Float.parseFloat(listRightEye.get(listRightEye.size() - 1).getRighteye()) + 50));
 
-            float shousuo = 0f, shuzhang = 0f;
+            float shousuo = 0f;
+            float shuzhang = 0f;
+
             for (int i = 0; i < listBloodPre.size() - 1; i++) {
+               // Log.i("listbp","shousuo= "+listBloodPre.get(i).getShousuo()+" shuzhang is "+listBloodPre.get(i).getShuzhang());
                 shousuo += Float.parseFloat(listBloodPre.get(i).getShousuo());
                 shuzhang += Float.parseFloat(listBloodPre.get(i).getShuzhang());
             }

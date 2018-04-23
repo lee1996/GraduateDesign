@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +153,6 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-
         person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
